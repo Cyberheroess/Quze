@@ -18,12 +18,6 @@
 
 ---
 
-## 📂 Struktur Direktori
-
-📂 Quze/ ├── 📜 quze.py                  # File utama script ├── 📜 shell.php                # Web shell untuk eksekusi remote ├── 📜 ml_model_v5.h5           # Model AI untuk mutasi payload ├── 📜 proxies.txt              # Daftar proxy untuk penyamaran ├── 📜 user_agents.txt          # Daftar user-agent untuk menghindari deteksi ├── 📜 quze_v9_log.txt          # Log aktivitas script ├── 📜 model_performance_log.txt # Log performa model AI ├── 📂 modules/                 # Folder untuk modul tambahan │   ├── 📜 encryption.py        # Modul enkripsi berbasis quantum │   ├── 📜 waf_bypass.py        # Modul bypass WAF │   ├── 📜 payload_mutation.py  # Modul untuk mutasi payload AI ├── 📂 reports/                 # Folder untuk hasil eksploitasi │   ├── 📜 reconnaissance.log   # Hasil scanning target │   ├── 📜 attack_results.txt   # Ringkasan hasil serangan └── 📂 tmp/                     # Folder sementara untuk file hasil eksploitasi ├── 📜 shell_session.txt    # File session jika digunakan web shell ├── 📜 exfiltrated_data.txt # Data yang dieksfiltrasi
-
----
-
 🚀 Cara Penggunaan
 
 Jalankan Quze dengan perintah:
