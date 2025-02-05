@@ -1,4 +1,4 @@
-# 🚀 Quze - AI & Quantum-Powered Security Framework  
+# 🤖 Quze - AI & Quantum-Powered Security Framework  
 > **"Menembus batas keamanan dengan kecerdasan buatan dan quantum computing!"**  
 
 ![Quze Logo](https://via.placeholder.com/800x300?text=Quze+-+AI+Security+Framework)  
