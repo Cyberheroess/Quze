@@ -18,22 +18,12 @@
 
 ---
 
-🚀 Cara Penggunaan
+## 🚀 Cara Penggunaan
 
 Jalankan Quze dengan perintah:
-
+```bash
 python quze.py
-
-Opsi yang tersedia:
-
-Masukkan target domain/IP untuk memulai eksploitasi.
-
-Gunakan Shell.php untuk akses remote command execution.
-
-Gunakan AI-powered payload mutation untuk bypass sistem keamanan.
-
-
-
+```
 ---
 
 ⚠ Disclaimer
