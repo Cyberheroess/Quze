@@ -23,7 +23,7 @@
 
 Jalankan Quze dengan perintah:
 ```bash
-python quze.py
+python Quzev1.0.py
 ```
 ---
 
