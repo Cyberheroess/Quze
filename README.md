@@ -2,7 +2,7 @@
 > **"Menembus batas keamanan dengan kecerdasan buatan dan quantum computing!"**  
 
 ![17387291271076628791271920395804](https://github.com/user-attachments/assets/e0f29eb7-f535-4dc0-9ad6-987314bf5edb)
-
+## masih dalam tahap perkembangan 🔧🗿
 
 ## 📌 Apa Itu Quze?
 **Quze** adalah framework **penetration testing** canggih yang sedang di kembangakan oleh cyberheroess yang telah menggabungkan **AI dan Quantum Computing** untuk **bypass keamanan, enkripsi, eksploitasi jaringan, dan analisis sistem**.  
