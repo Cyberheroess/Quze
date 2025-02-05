@@ -1,7 +1,8 @@
 # 🤖 Quze - AI & Quantum-Powered Security Framework  
 > **"Menembus batas keamanan dengan kecerdasan buatan dan quantum computing!"**  
 
-![Quze Logo](https://via.placeholder.com/800x300?text=Quze+-+AI+Security+Framework)  
+![17387291271076628791271920395804](https://github.com/user-attachments/assets/e0f29eb7-f535-4dc0-9ad6-987314bf5edb)
+
 
 ## 📌 Apa Itu Quze?
 **Quze** adalah framework **penetration testing** canggih yang sedang di kembangakan oleh cyberheroess yang telah menggabungkan **AI dan Quantum Computing** untuk **bypass keamanan, enkripsi, eksploitasi jaringan, dan analisis sistem**.  
