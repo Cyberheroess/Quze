@@ -1,43 +1,47 @@
+
 # 🤖 Quze - AI & Quantum-Powered Security Framework  
-> **"Menembus batas keamanan dengan kecerdasan buatan dan quantum computing!"**  
+> **"Breaking the boundaries of security with artificial intelligence and quantum computing!"**  
 
 ![17387291271076628791271920395804](https://github.com/user-attachments/assets/e0f29eb7-f535-4dc0-9ad6-987314bf5edb)
-## masih dalam tahap perkembangan 🔧🗿
+## Currently under development 🔧🗿
 
-## 📌 Apa Itu Quze?
-**Quze** adalah framework **penetration testing** canggih yang sedang di kembangakan oleh cyberheroess yang telah menggabungkan **AI dan Quantum Computing** untuk **bypass keamanan, enkripsi, eksploitasi jaringan, dan analisis sistem**.  
+## 📌 What is Quze?
+**Quze** is an advanced **penetration testing** framework being developed by CyberHeroes that integrates **AI and Quantum Computing** to **bypass security, encryption, exploit networks, and analyze systems**.
 
-## 🎯 Fitur Utama
-| 🔥 Fitur | 🛠️ Deskripsi |
-|----------|-------------|
-| 🤖 **AI Payload Mutation** | Menggunakan **model AI** untuk mengembangkan payload canggih yang sulit dideteksi. |
-| 🔐 **Quantum Encryption** | Mengenkripsi payload menggunakan **teknik enkripsi berbasis quantum**. |
-| 🕵️ **Autonomous Reconnaissance** | Menganalisis target secara otomatis untuk menemukan celah keamanan. |
-| 🏹 **Evasive Payloads** | Menghasilkan payload yang **dinamis dan sulit terdeteksi** oleh WAF/IDS. |
-| 💻 **Remote Command Execution** | Dapat mengeksekusi perintah pada server target melalui **Shell.php**. |
-| 🌍 **Distributed Attack** | Menggunakan **multi-threading** untuk serangan simultan di banyak target. |
+## 🎯 Key Features
+| 🔥 Feature | 🛠️ Description |
+|------------|---------------|
+| 🤖 **AI Payload Mutation** | Uses an **AI model** to develop advanced payloads that are hard to detect. |
+| 🔐 **Quantum Encryption** | Encrypts payloads using **quantum-based encryption techniques**. |
+| 🕵️ **Autonomous Reconnaissance** | Automatically analyzes the target to find security vulnerabilities. |
+| 🏹 **Evasive Payloads** | Generates **dynamic payloads that are hard to detect** by WAF/IDS. |
+| 💻 **Remote Command Execution** | Can execute commands on the target server through **Shell.php**. |
+| 🌍 **Distributed Attack** | Uses **multi-threading** for simultaneous attacks on multiple targets. |
 
 ---
 
-## 🚀 Cara Penggunaan
+## 🚀 How to Use
 
-Jalankan Quze dengan perintah:
+Run Quze with the following command:
 ```bash
 python Quzev1.0.py
-```
+
+
 ---
 
 ⚠ Disclaimer
 
-🚨 PERINGATAN! 🚨
-Quze dibuat hanya untuk keperluan edukasi dan pengujian keamanan yang sah!
-Segala bentuk penyalahgunaan terhadap sistem yang tidak memiliki izin adalah ilegal dan dilarang keras.
+🚨 WARNING! 🚨 Quze is created solely for educational and authorized security testing purposes!
+Any misuse of systems without permission is illegal and strictly prohibited.
 
-> Gunakan dengan bijak!
+> Use wisely!
 
----
 
-📢 Kontribusi & Pengembangan
-Jika ingin berkontribusi atau mengembangkan Quze lebih lanjut, silakan buat Pull Request atau laporkan masalah di Issue Tracker!
+
 
 ---
+
+📢 Contributions & Development If you'd like to contribute or further develop Quze, please create a Pull Request or report issues in the Issue Tracker!
+
+
+
