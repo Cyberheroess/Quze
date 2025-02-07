@@ -58,7 +58,7 @@ def load_ml_model():
         
         logging.info("[*] Optimizing model for performance (Lazy Loading)...")
         
-        test_payload = 'payload_test'
+        test_payload = np.random.rand(1, 10)
         sample_input = preprocess_input(test_payload)
         test_output = model.predict(sample_input)
         logging.info(f"[*] Model prediction test successful: {test_output[:5]}")  
@@ -128,7 +128,8 @@ def ai_neural_mutation(model, payload):
     Returns:
         str: The AI-mutated payload.
     """
-    input_data = preprocess_input(payload)
+    input_data = np.array([[ord(c) for c in payload]])  
+ input_data = preprocess_input(input_data)  
     predicted_mutation = model.predict(input_data)[0]
     
     mutated_payload = postprocess_output(predicted_mutation)
