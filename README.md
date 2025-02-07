@@ -24,7 +24,7 @@
 
 Run Quze with the following command:
 ```bash
-python Quzev1.0.py
+python Quzev1.5.py
 ```
 
 ---
