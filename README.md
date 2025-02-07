@@ -42,6 +42,7 @@ pip install cryptography
 pip install pycryptodome
 pip install tensorflow tensorflow-cpu
 python3 Quzev1.5.py
+```
 ---
 
 ⚠ Disclaimer
