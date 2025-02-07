@@ -36,7 +36,10 @@ def train_and_save_models():
     ]
 
     for name in filenames:
-        model.save(name)
+        if name.endswith(".h5"):
+            model.save(name, save_format="h5")
+        else:
+            model.save(name)  # Keras format default
         print(f"[+] Model berhasil disimpan sebagai {name}")
 
 train_and_save_models()
