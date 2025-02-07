@@ -32,7 +32,7 @@ LOGO = f'''
 ╚██████╔╝    ╚██████╔╝    ███████╗    ███████╗
  ╚══▀▀═╝      ╚═════╝     ╚══════╝     ╚══════╝
  {Y} create {r} to Cyberheroesss 
- {Y} Version {r}: Quze V1,0
+ {Y} Version {r}: Quze V1,5
  '''
 
 logging.basicConfig(filename='quze_v9_log.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
