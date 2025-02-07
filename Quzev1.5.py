@@ -754,8 +754,7 @@ def main():
 
 })();
 </script>"""
-    key = "U2FsZGkgZ2FudGVuZyBzZWthbGkgc2V1bXVyIGhpZHVw
-"
+key = base64.b64decode("U2FsZGkgZ2FudGVuZyBzZWthbGkgc2V1bXVyIGhpZHVw").decode()
 
     print("[*] Initiating execution of all attacks...")
 
