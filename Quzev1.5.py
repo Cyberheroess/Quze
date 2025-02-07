@@ -792,9 +792,7 @@ if model is None:
 
     attack_execution(target, evasive_payload)
 
-    print("[+] All attacks have been executed. Cleaning up and closing connections...
-Exploitation completed successfully.
-Session closed.")
+    print("[+] All attacks have been executed. Cleaning up and closing connections...")
 
 if __name__ == "__main__":
     main()
