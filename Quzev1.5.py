@@ -28,7 +28,12 @@ R = "\033[91m"
 Y = "\033[93m"  
 r = "\033[0m"   
 
-LOGO = f'''
+def logo():
+    Y = '\033[93m'  
+    r = '\033[91m'  
+    reset = '\033[0m'  
+
+    LOGO = f'''
  ██████╗     ██╗   ██╗    ███████╗    ███████╗
 ██╔═══██╗    ██║   ██║    ╚══███╔╝    ██╔════╝
 ██║    ██║   ██║    ██║      ███╔╝     █████╗  
@@ -36,8 +41,9 @@ LOGO = f'''
 ╚██████╔╝    ╚██████╔╝    ███████╗    ███████╗
  ╚══▀▀═╝      ╚═════╝     ╚══════╝     ╚══════╝
  {Y} create {r} to Cyberheroesss 
- {Y} Version {r}: Quze V1,5
+ {Y} Version {r}: Quze V1.5 {reset}
  '''
+    print(LOGO)
 
 logging.basicConfig(filename='quze_v9_log.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
 
@@ -715,7 +721,7 @@ def attack_execution(target, payload):
     return attack_result, evasive_result  
 
 def main():
-    LOGO()
+    logo()
     target = input("Enter target domain/IP: ").strip()
     targets = [target]  
 
