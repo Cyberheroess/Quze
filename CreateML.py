@@ -30,7 +30,7 @@ def train_and_save_models():
         "ml_model_V5.h5",
         "ml_model_v5.h5",
         "ml_Model_V5.h5",
-        "ml_model_V5.H5",
+        "ml_model_V5.h5",
         "ML_MODEL_V5.h5",
         "ml_model_v5.keras"
     ]
