@@ -1,15 +1,15 @@
-numpy -y
-requests -y
-tensorflow -y
-tensorflow tensorflow-cpu -y
-tensorflow-hub -y
-tensorflow-datasets -y
-tensorflow-addons -y
-keras -y
-cryptography -y
-pycryptodome -y
-scipy -y
-scikit-learn -y
-pandas -y
-matplotlib -y
-urllib3 -y
+numpy 
+requests 
+tensorflow 
+tensorflow tensorflow-cpu 
+tensorflow-hub 
+tensorflow-datasets 
+tensorflow-addons 
+keras 
+cryptography 
+pycryptodome 
+scipy 
+scikit-learn 
+pandas 
+matplotlib 
+urllib3 
