@@ -73,7 +73,7 @@ def load_ml_model():
         logging.error(f"[-] Unexpected error loading AI Model: {e}")
         print(f"[-] Unexpected error: {e}")
         return None
-
+#ini
 def ai_payload_mutation_v2(model, payload, max_iterations=10):
     """
     This function generates an evolved payload by combining AI model-driven mutations with quantum error correction
@@ -791,9 +791,7 @@ if model is None:
 
     attack_execution(target, evasive_payload)
 
-    print("[+] All attacks have been executed. Cleaning up and closing connections...
-Exploitation completed successfully.
-Session closed.")
+    print("[+] All attacks have been executed. Cleaning up and closing connections...Exploitation completed successfully.session closed.")
 
 if __name__ == "__main__":
     main()
