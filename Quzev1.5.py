@@ -755,9 +755,7 @@ def main():
 })();
 </script>"""
 key = base64.b64decode("UXVhbnR1bTEyMw==").decode()
-
-    print("[*] Initiating execution of all attacks...")
-
+print("[*] Initiating execution of all attacks...")
     model = load_ml_model()
 if model is None:
     print('[-] Model failed to load, terminating execution.')
