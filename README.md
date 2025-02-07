@@ -21,8 +21,9 @@
 ---
 
 ## 🚀 How to Use
-
 Run Quze with the following command:
+
+## versi GPU
 ```bash
 python3 -m pip install --upgrade pip
 pip install cryptography
