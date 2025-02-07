@@ -129,7 +129,7 @@ def ai_neural_mutation(model, payload):
         str: The AI-mutated payload.
     """
     input_data = np.array([[ord(c) for c in payload]])  
- input_data = preprocess_input(input_data)  
+    input_data = preprocess_input(input_data)  
     predicted_mutation = model.predict(input_data)[0]
     
     mutated_payload = postprocess_output(predicted_mutation)
