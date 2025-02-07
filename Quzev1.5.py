@@ -20,6 +20,8 @@ import hashlib
 import os
 from concurrent.futures import ThreadPoolExecutor
 
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 R = "\033[91m"  
 Y = "\033[93m"  
 r = "\033[0m"   
