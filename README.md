@@ -24,9 +24,24 @@
 
 Run Quze with the following command:
 ```bash
-sudo python3 Quzev1.5.py
+python3 -m pip install --upgrade pip
+pip install cryptography
+pip install pycryptodome
+pip install tensorflow
+nvidia-smi
+nvidia-smi
+nvcc --version
+python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+python3 Quzev1.5.py
 ```
 
+## versi CPU
+```
+python3 -m pip install --upgrade pip
+pip install cryptography
+pip install pycryptodome
+pip install tensorflow tensorflow-cpu
+python3 Quzev1.5.py
 ---
 
 ⚠ Disclaimer
