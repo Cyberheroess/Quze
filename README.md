@@ -33,6 +33,10 @@ nvidia-smi
 nvidia-smi
 nvcc --version
 python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+python -m venv env_gpu
+source env_gpu/bin/activate 
+env_gpu\Scripts\activate  
+pip install tensorflow  
 python3 Quzev1.5.py
 ```
 
@@ -41,7 +45,10 @@ python3 Quzev1.5.py
 python3 -m pip install --upgrade pip
 pip install cryptography
 pip install pycryptodome
-pip install tensorflow tensorflow-cpu
+pip install tensorflow-cpu
+python -m venv env_cpu
+source env_cpu/bin/activate  
+env_cpu\Scripts\activate  
 python3 Quzev1.5.py
 ```
 ---
