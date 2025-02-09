@@ -11,7 +11,7 @@ import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
 from tensorflow.keras.models import load_model
-from tensorflow.keras.applications.mobilenet_v2 import preprocess_input  # ✅ Tambahin ini!
+from tensorflow.keras.applications.mobilenet_v2 import preprocess_input  
 from urllib.parse import quote
 from urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
@@ -20,6 +20,8 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import hashlib
 import os
 from concurrent.futures import ThreadPoolExecutor
+import tensorflow as tf
+print(tf.config.list_physical_devices('CPU'))
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
