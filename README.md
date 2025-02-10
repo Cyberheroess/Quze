@@ -23,6 +23,7 @@
 
 ## 🚀 How to Use
 Run Quze with the following command:
+![17391791215965584000445878766153](https://github.com/user-attachments/assets/07efe3d5-bb4e-47d7-8697-e16a0b2c654e)
 
 ## versi GPU
 ```bash
