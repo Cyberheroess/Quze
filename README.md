@@ -26,6 +26,7 @@ Run Quze with the following command:
 
 ## versi GPU
 ```bash
+git clone https://github.com/Cyberheroess/Quze
 python3 -m pip install --upgrade pip
 pip install cryptography
 pip install pycryptodome
@@ -44,6 +45,7 @@ python3 Quzev1.5.0.py
 
 ## versi CPU
 ```
+git clone https://github.com/Cyberheroess/Quze
 python3 -m pip install --upgrade pip
 pip install cryptography
 pip install pycryptodome
