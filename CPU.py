@@ -7,7 +7,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoa
 import numpy as np
 import datetime
 
-# **Cek apakah GPU tersedia & gunakan jika ada**
+# **Deteksi GPU & Konfigurasi TensorFlow**
 gpus = tf.config.list_physical_devices('GPU')
 if gpus:
     print(f"[+] GPU Ditemukan: {gpus}")
@@ -16,17 +16,17 @@ else:
     print("[!] Tidak ada GPU, menggunakan CPU...")
     os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
-# **Fungsi untuk membuat dataset yang lebih realistis**
+# **Dataset Generator (Pastikan Shape Sesuai dengan Quze)**
 def generate_data():
-    """Membuat dataset dengan distribusi lebih baik dan jumlah lebih besar."""
+    """Membuat dataset dengan distribusi yang sesuai dengan input Quze (15 fitur)."""
     np.random.seed(42)
-    X = np.random.normal(loc=0.0, scale=1.0, size=(10000, 15))  # Tambah dimensi fitur
+    X = np.random.normal(loc=0.0, scale=1.0, size=(10000, 15))  # **15 fitur**
     y = np.random.randint(0, 2, 10000)  # Label biner
     return X, y
 
-# **Fungsi untuk membuat model AI yang lebih canggih**
+# **Model AI Sesuai dengan Input Quze**
 def create_model(input_shape):
-    """Membangun model dengan Batch Normalization untuk stabilitas & Dropout optimal."""
+    """Membangun model AI dengan arsitektur yang optimal & cocok dengan input Quze."""
     model = Sequential([
         Dense(256, input_shape=(input_shape,), activation='relu'),
         BatchNormalization(),
@@ -35,8 +35,6 @@ def create_model(input_shape):
         BatchNormalization(),
         Dropout(0.3),
         Dense(64, activation='relu'),
-        Dropout(0.2),
-        Dense(32, activation='relu'),
         Dense(1, activation='sigmoid')
     ])
     model.compile(optimizer=Adam(learning_rate=0.001), 
@@ -44,7 +42,7 @@ def create_model(input_shape):
                   metrics=['accuracy'])
     return model
 
-# **Fungsi utama untuk melatih dan menyimpan model**
+# **Latih & Simpan Model (Pastikan Model Bisa Di-load di Quze)**
 def train_and_save_models():
     X, y = generate_data()
     model = create_model(X.shape[1])
@@ -54,7 +52,7 @@ def train_and_save_models():
     # **Callback untuk optimasi training**
     checkpoint_path = "best_model_v5.h5"
     log_dir = f"logs/fit/{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}"
-    
+
     callbacks = [
         EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True),
         ModelCheckpoint(filepath=checkpoint_path, monitor='val_accuracy', save_best_only=True, mode='max'),
@@ -62,25 +60,33 @@ def train_and_save_models():
         TensorBoard(log_dir=log_dir)
     ]
 
-    # **Latih model dengan callback**
+    # **Latih model dengan validasi**
     model.fit(X, y, epochs=100, batch_size=64, validation_split=0.2, callbacks=callbacks)
 
-    # **Simpan model dalam berbagai format**
+    # **Cek & Validasi Model Sebelum Disimpan**
+    print("[*] Validasi model dengan input test...")
+    test_input = np.random.rand(1, 15)  # **Pastikan input sesuai dengan model**
+    try:
+        test_output = model.predict(test_input)
+        print(f"[+] Model valid, contoh output: {test_output}")
+    except Exception as e:
+        print(f"[!] ERROR: Model gagal dipakai untuk inferensi: {e}")
+        return
+
+    # **Simpan Model dengan Nama yang Konsisten**
     filenames = [
-    "ml_model_V5.h5",
-    "ml_model_v5.h5",
-    "ml_Model_V5.h5",
-    "ML_MODEL_V5.h5",
-    "ml_model_v5.keras",
-    "ml_MODEL_V5.keras",
-    "ML_Model_v5.keras",
-    "ml_model_v5_backup.h5"
-]
+        "ml_model_V5.h5",
+        "ml_model_v5.h5",
+        "ml_Model_V5.h5",
+        "ML_MODEL_V5.h5",
+        "ml_model_v5.keras",
+        "ml_model_v5_backup.h5"
+    ]
     for name in filenames:
         if name.endswith(".h5"):
             model.save(name, save_format="h5")
         else:
-            model.save(name)  # Keras format default
+            model.save(name)  # Format default Keras
         print(f"[+] Model berhasil disimpan sebagai {name}")
 
 train_and_save_models()
