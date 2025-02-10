@@ -69,11 +69,15 @@ def train_and_save_models():
 
     # **Simpan model dalam berbagai format**
     filenames = [
-        "ml_model_GPU.h5",
-        "ml_model_gpu.keras",
-        "ml_MODEL_GPU.keras",
-        "ml_model_gpu_backup.h5"
-    ]
+    "ml_model_V5.h5",
+    "ml_model_v5.h5",
+    "ml_Model_V5.h5",
+    "ML_MODEL_V5.h5",
+    "ml_model_v5.keras",
+    "ml_MODEL_V5.keras",
+    "ML_Model_v5.keras",
+    "ml_model_v5_backup.h5"
+]
     for name in filenames:
         if name.endswith(".h5"):
             model.save(name, save_format="h5")
