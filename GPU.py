@@ -7,53 +7,50 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoa
 import numpy as np
 import datetime
 
-# **Cek & Pakai GPU Jika Ada**
+# **Deteksi GPU & Konfigurasi TensorFlow**
 gpus = tf.config.list_physical_devices('GPU')
 if gpus:
     print(f"[+] GPU Ditemukan: {gpus}")
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"  # Pakai GPU utama
-    tf.keras.mixed_precision.set_global_policy("mixed_float16")  # Optimasi precision
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 else:
     print("[!] Tidak ada GPU, menggunakan CPU...")
     os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
-# **Fungsi untuk membuat dataset besar dengan noise minimal**
+# **Dataset Generator (Pastikan Shape Sesuai dengan Quze)**
 def generate_data():
-    """Membuat dataset besar dengan distribusi yang lebih kompleks."""
+    """Membuat dataset dengan distribusi yang sesuai dengan input Quze (15 fitur)."""
     np.random.seed(42)
-    X = np.random.uniform(low=-1.0, high=1.0, size=(20000, 20))  # Tambah dimensi & distribusi lebih kompleks
-    y = np.random.randint(0, 2, 20000)  # Label biner
+    X = np.random.normal(loc=0.0, scale=1.0, size=(10000, 15))  # **15 fitur**
+    y = np.random.randint(0, 2, 10000)  # Label biner
     return X, y
 
-# **Fungsi untuk membuat model AI yang lebih canggih & optimal untuk GPU**
+# **Model AI Sesuai dengan Input Quze**
 def create_model(input_shape):
-    """Membangun model dengan Batch Normalization, Dropout lebih optimal, dan arsitektur lebih dalam."""
+    """Membangun model AI dengan arsitektur yang optimal & cocok dengan input Quze."""
     model = Sequential([
-        Dense(512, input_shape=(input_shape,), activation='relu'),
-        BatchNormalization(),
-        Dropout(0.5),
-        Dense(256, activation='relu'),
+        Dense(256, input_shape=(input_shape,), activation='relu'),
         BatchNormalization(),
         Dropout(0.4),
         Dense(128, activation='relu'),
+        BatchNormalization(),
         Dropout(0.3),
         Dense(64, activation='relu'),
-        Dense(1, activation='sigmoid', dtype=tf.float32)  # Pastikan output tetap float32 meski pakai mixed precision
+        Dense(1, activation='sigmoid')
     ])
     model.compile(optimizer=Adam(learning_rate=0.001), 
                   loss='binary_crossentropy', 
                   metrics=['accuracy'])
     return model
 
-# **Fungsi utama untuk melatih dan menyimpan model dengan GPU**
+# **Latih & Simpan Model (Pastikan Model Bisa Di-load di Quze)**
 def train_and_save_models():
     X, y = generate_data()
     model = create_model(X.shape[1])
 
-    print("[*] Mulai pelatihan model di GPU...")
+    print("[*] Mulai pelatihan model...")
 
     # **Callback untuk optimasi training**
-    checkpoint_path = "best_model_gpu.h5"
+    checkpoint_path = "best_model_v5.h5"
     log_dir = f"logs/fit/{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}"
 
     callbacks = [
@@ -63,26 +60,33 @@ def train_and_save_models():
         TensorBoard(log_dir=log_dir)
     ]
 
-    # **Latih model dengan GPU**
-    with tf.device('/GPU:0'):
-        model.fit(X, y, epochs=150, batch_size=128, validation_split=0.2, callbacks=callbacks)
+    # **Latih model dengan validasi**
+    model.fit(X, y, epochs=100, batch_size=64, validation_split=0.2, callbacks=callbacks)
 
-    # **Simpan model dalam berbagai format**
+    # **Cek & Validasi Model Sebelum Disimpan**
+    print("[*] Validasi model dengan input test...")
+    test_input = np.random.rand(1, 15)  # **Pastikan input sesuai dengan model**
+    try:
+        test_output = model.predict(test_input)
+        print(f"[+] Model valid, contoh output: {test_output}")
+    except Exception as e:
+        print(f"[!] ERROR: Model gagal dipakai untuk inferensi: {e}")
+        return
+
+    # **Simpan Model dengan Nama yang Konsisten**
     filenames = [
-    "ml_model_V5.h5",
-    "ml_model_v5.h5",
-    "ml_Model_V5.h5",
-    "ML_MODEL_V5.h5",
-    "ml_model_v5.keras",
-    "ml_MODEL_V5.keras",
-    "ML_Model_v5.keras",
-    "ml_model_v5_backup.h5"
-]
+        "ml_model_V5.h5",
+        "ml_model_v5.h5",
+        "ml_Model_V5.h5",
+        "ML_MODEL_V5.h5",
+        "ml_model_v5.keras",
+        "ml_model_v5_backup.h5"
+    ]
     for name in filenames:
         if name.endswith(".h5"):
             model.save(name, save_format="h5")
         else:
             model.save(name)  # Format default Keras
-        print(f"[+] Model GPU berhasil disimpan sebagai {name}")
+        print(f"[+] Model berhasil disimpan sebagai {name}")
 
 train_and_save_models()
