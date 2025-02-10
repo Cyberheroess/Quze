@@ -37,7 +37,8 @@ python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU')
 python -m venv env_gpu
 source env_gpu/bin/activate 
 env_gpu\Scripts\activate  
-pip install tensorflow  
+pip install tensorflow
+GPU.py  
 python3 Quzev1.5.py
 ```
 
@@ -49,7 +50,9 @@ pip install pycryptodome
 pip install tensorflow-cpu
 python -m venv env_cpu
 source env_cpu/bin/activate  
-env_cpu\Scripts\activate  
+env_cpu\Scripts\activate
+CPU.py
+tester.py
 python3 Quzev1.5.py
 ```
 ---
