@@ -39,7 +39,7 @@ source env_gpu/bin/activate
 env_gpu\Scripts\activate  
 pip install tensorflow
 GPU.py  
-python3 Quzev1.5.py
+python3 Quzev1.5.0.py
 ```
 
 ## versi CPU
