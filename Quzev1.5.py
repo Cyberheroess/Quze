@@ -19,12 +19,13 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import hashlib
 import os
-from concurrent.futures import ThreadPoolExecutor
-import tensorflow as tf
-print(tf.config.list_physical_devices('CPU'))
-
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import tensorflow as tf
+print("Using TensorFlow version:", tf.__version__)
+print("GPU Available:", tf.config.list_physical_devices('GPU'))
+
+from concurrent.futures import ThreadPoolExecutor
+
 
 R = "\033[91m"  
 Y = "\033[93m"  
