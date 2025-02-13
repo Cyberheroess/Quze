@@ -3,7 +3,8 @@
 
 > **"Breaking the boundaries of security with artificial intelligence and quantum computing!"**  
 
-![17387291271076628791271920395804](https://github.com/user-attachments/assets/e0f29eb7-f535-4dc0-9ad6-987314bf5edb)
+![17394563796667849019092258424847](https://github.com/user-attachments/assets/c572dc16-b83f-471e-ab7d-8b58d254e25e)
+
 ## Currently under development 🔧🗿
 
 ## 📌 What is Quze?
