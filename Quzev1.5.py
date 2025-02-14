@@ -87,48 +87,75 @@ def load_ml_model():
         print(f"[-] Unexpected error: {e}")
         return None
 
-def ai_payload_mutation_v2(model, payload, max_iterations=15):
+def ai_payload_mutation_v2(model, payload, max_iterations=20):
     """
-    Generates an advanced payload using AI mutation, Quantum Bayesian Optimization,
-    and Self-Healing Quantum Mechanisms to ensure evasion and unpredictability.
+    Menghasilkan payload yang berevolusi secara canggih dengan AI Mutation, Quantum Bayesian Optimization,
+    Adaptive Cloaking, dan Self-Healing Quantum Reinforcement untuk menghindari deteksi secara maksimal.
+
+    Args:
+        model (tensorflow.keras.Model): Model AI yang digunakan untuk mutasi payload.
+        payload (str): Payload awal yang akan dimutasi.
+        max_iterations (int): Jumlah iterasi untuk evolusi payload.
+
+    Returns:
+        str: Payload yang telah dimutasi dan dioptimalkan secara maksimal.
     """
     evolved_payload = payload
 
     for iteration in range(max_iterations):
-        logging.info(f"[*] Iteration {iteration + 1}/{max_iterations} - Enhancing Payload")
+        logging.info(f"[*] Iterasi {iteration + 1}/{max_iterations} - Evolusi Payload Dimulai")
 
         # Step 1: AI-driven Neural Mutation
         neural_mutated_payload = ai_neural_mutation(model, evolved_payload)
 
-        # Step 2: Quantum Superposition Encoding (Multiple variations for evasion)
+        # Step 2: Quantum Superposition Encoding (Membuat beberapa variasi payload sekaligus)
         quantum_variants = [
             neural_mutated_payload,
             evade_multi_layers(neural_mutated_payload),
             quantum_error_correction(neural_mutated_payload),
-            advanced_quantum_encryption(neural_mutated_payload, "QuantumKeySecure")
+            advanced_quantum_encryption(neural_mutated_payload, "QuantumKeySecure"),
+            ''.join(random.sample(neural_mutated_payload, len(neural_mutated_payload)))  # Randomized Reordering
         ]
-        probabilities = [0.25, 0.25, 0.25, 0.25]  # Initial equal probability
+        probabilities = [0.20] * len(quantum_variants)  # Semua varian memiliki probabilitas awal yang sama
         evolved_payload = random.choices(quantum_variants, weights=probabilities, k=1)[0]
 
-        # Step 3: Quantum Bayesian Optimization (Improving success probability)
+        # Step 3: Quantum Bayesian Optimization (Menyesuaikan probabilitas keberhasilan payload)
         feedback = analyze_payload_feedback(evolved_payload)
-        probabilities = [p * (1 + feedback['success_rate'] * 0.6) for p in probabilities]
+        probabilities = [p * (1 + feedback['success_rate'] * 0.7) for p in probabilities]
         evolved_payload = random.choices(quantum_variants, weights=probabilities, k=1)[0]
 
-        # Step 4: AI-driven Dynamic Obfuscation for WAF Evasion
+        # Step 4: AI-driven Multi-Layer Obfuscation (Menghindari deteksi WAF)
         evolved_payload = dynamic_payload_obfuscation(evolved_payload)
 
-        # Step 5: Quantum Self-Healing - Adapts if detected
-        if feedback['success_rate'] < 0.75:
+        # Step 5: Self-Healing Quantum Reinforcement (Jika payload terdeteksi, otomatis beradaptasi)
+        if feedback['success_rate'] < 0.80:
             evolved_payload = self_healing_quantum_payload(evolved_payload)
 
-        # Break if optimized
-        if feedback['success_rate'] > 0.90:
-            logging.info("[+] Optimized Quantum Payload Achieved!")
+        # Step 6: Quantum Cloaking (Menyamarkan payload agar terlihat seperti traffic normal)
+        evolved_payload = f"<!-- Normal Request --> {evolved_payload} <!-- End Request -->"
+
+        # Step 7: AI-driven Noise Injection (Menyisipkan karakter acak untuk mengacaukan pola deteksi)
+        evolved_payload = ''.join([
+            char if random.random() > 0.25 else random.choice(string.ascii_letters + string.digits)
+            for char in evolved_payload
+        ])
+
+        # Step 8: Adaptive Encryption Layer (AES-256 dengan Quantum Key)
+        key = hashlib.sha256(b"QuantumCyberHeroesKey").digest()
+        iv = os.urandom(16)
+        cipher = AES.new(key, AES.MODE_CBC, iv)
+        encrypted_payload = base64.b64encode(iv + cipher.encrypt(pad(evolved_payload.encode(), AES.block_size))).decode()
+
+        # Step 9: Quantum Secure Packet Encoding (Final Adaptive Obfuscation)
+        secure_payload = f"<!-- Quantum Secure --> {encrypted_payload} <!-- End Secure -->"
+
+        # Break jika payload sudah optimal
+        if feedback['success_rate'] > 0.95:
+            logging.info("[+] Payload telah mencapai tingkat optimasi maksimum.")
             break
 
-    logging.info(f"[*] Final Quantum Evasive Payload: {evolved_payload[:50]}...")
-    return evolved_payload
+    logging.info(f"[*] Final Quantum AI Adaptive Payload: {secure_payload[:50]}...")
+    return secure_payload
 
 def ai_neural_mutation(model, payload):
     """
