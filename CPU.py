@@ -1,94 +1,50 @@
-import tensorflow as tf
-from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Dense, Dropout, Input, LSTM
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.regularizers import l2
-from tensorflow.keras.callbacks import ReduceLROnPlateau
 import numpy as np
-import os
-import logging
-import random
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # Matikan GPU jika perlu
-print("Using TensorFlow version:", tf.__version__)
+# Buat dataset dummy dengan 10 fitur
+num_samples = 5000
+num_features = 10
 
-model_paths = [
-    "ml_model_v6.h5",
-    "quze_ai_advanced_model.h5",
-    "cyber_ai_v2.h5",
-    "quantum_ml_advanced_model.h5",
-    "adaptive_payload_model_v2.h5"
-    "ml_model_V5.h5",
-    "ml_model_v5.h5",
-    "ml_Model_V5.h5",
-    "ML_MODEL_V5.h5",
-    "ml_model_v5.keras",
-    "ml_model_v5_backup.h5"
-]
+X = np.random.rand(num_samples, num_features)
+y = np.random.randint(0, 2, size=(num_samples,))  # Klasifikasi biner
 
+# Bagi dataset
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-logging.basicConfig(filename="training_log_advanced.txt", level=logging.INFO, format="%(asctime)s - %(message)s")
+# Normalisasi data
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
 
-def generate_mutation_data(samples=5000):
-    """
-    Membuat dataset AI untuk mengenali pola mutasi payload SQLi, XSS, dan WAF bypass.
-    """
-    patterns = [
-        "' OR 1=1 --", "<script>alert('XSS')</script>", "'; DROP TABLE users; --",
-        "admin' --", "' UNION SELECT * FROM users --"
-    ]
+# Bangun model dengan lebih banyak lapisan dan neuron
+model = Sequential([
+    Dense(128, activation='relu', input_shape=(num_features,)),
+    BatchNormalization(),
+    Dropout(0.3),
+    Dense(64, activation='relu'),
+    BatchNormalization(),
+    Dropout(0.3),
+    Dense(32, activation='relu'),
+    BatchNormalization(),
+    Dense(1, activation='sigmoid')  # Output layer untuk klasifikasi biner
+])
 
-    variations = [
-        "' OR 'a'='a' --", "<img src=x onerror=alert('XSS')>",
-        "'; EXEC xp_cmdshell('dir'); --", "' or 1=1#",
-        "' UNION SELECT username, password FROM users --"
-    ]
+# Kompilasi model dengan optimizer yang lebih canggih dan adaptive learning rate
+model.compile(optimizer=Adam(learning_rate=0.001), loss='binary_crossentropy', metrics=['accuracy'])
 
-    X, y = [], []
-    for _ in range(samples):
-        idx = random.randint(0, len(patterns) - 1)
-        X.append([ord(c) for c in patterns[idx].ljust(10)])  # Padding ke 10 karakter
-        y.append([ord(c) for c in variations[idx].ljust(10)])  # Padding ke 10 karakter
+# Callback untuk menghentikan lebih awal dan mengurangi learning rate saat tidak ada peningkatan
+early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=3, min_lr=1e-6)
 
-    return np.array(X), np.array(y)
+# Latih model
+model.fit(X_train, y_train, epochs=50, batch_size=32, validation_data=(X_test, y_test), 
+          callbacks=[early_stopping, reduce_lr])
 
-X_train, y_train = generate_mutation_data(5000)
-X_test, y_test = generate_mutation_data(1000)
-
-def create_mutation_model():
-    inputs = Input(shape=(10,))
-    x = Dense(128, activation='relu', kernel_regularizer=l2(0.01))(inputs)
-    x = Dropout(0.3)(x)
-    x = Dense(256, activation='relu')(x)
-    x = Dropout(0.3)(x)
-    x = Dense(512, activation='relu')(x)
-    x = Dropout(0.4)(x)
-    x = Dense(128, activation='relu')(x)
-    x = Dense(10, activation='linear')(x)  # Output 10 karakter termutasi
-    
-    model = Model(inputs, x)
-    model.compile(optimizer=Adam(learning_rate=0.001),
-                  loss='mse',
-                  metrics=['accuracy'])
-    return model
-
-model = create_mutation_model()
-model.summary()
-
-def train_model(model, X_train, y_train, X_test, y_test):
-    lr_scheduler = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=3, verbose=1)
-
-    print("[*] Training AI model untuk mutasi payload...")
-    history = model.fit(X_train, y_train, epochs=50, batch_size=64, validation_data=(X_test, y_test), callbacks=[lr_scheduler])
-
-    loss, accuracy = model.evaluate(X_test, y_test)
-    if accuracy > 0.80:  
-        for path in model_paths:
-            model.save(path)
-            logging.info(f"[+] Model disimpan sebagai {path} dengan akurasi {accuracy:.2f}")
-            print(f"[+] Model disimpan sebagai {path} dengan akurasi {accuracy:.2f}")
-    else:
-        logging.error(f"[-] Model tidak memenuhi syarat, akurasi hanya {accuracy:.2f}")
-        print(f"[-] Model tidak memenuhi syarat, akurasi hanya {accuracy:.2f}. Latih ulang diperlukan.")
-
-train_model(model, X_train, y_train, X_test, y_test)
+# Simpan model
+model.save("ml_model_v5.h5")
