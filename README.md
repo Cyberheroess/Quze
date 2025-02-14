@@ -1,6 +1,5 @@
 
 # 🤖 Quze - (Quantum zero-day)
-ChatGPT Challenge Accepted!
 > **"Breaking the boundaries of security with artificial intelligence and quantum computing!"**  
 
 ![17394563796667849019092258424847](https://github.com/user-attachments/assets/c572dc16-b83f-471e-ab7d-8b58d254e25e)
