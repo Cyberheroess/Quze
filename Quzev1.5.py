@@ -31,23 +31,6 @@ R = "\033[91m"
 Y = "\033[93m"  
 r = "\033[0m"   
 
-def logo():
-    Y = '\033[93m'  
-    r = '\033[91m'  
-    reset = '\033[0m'  
-
-    LOGO = f'''
- ██████╗     ██╗   ██╗    ███████╗    ███████╗
-██╔═══██╗    ██║   ██║    ╚══███╔╝    ██╔════╝
-██║    ██║   ██║    ██║      ███╔╝     █████╗  
-██║▄▄ ██║    ██║   ██║     ███╔╝       ██╔══╝  
-╚██████╔╝    ╚██████╔╝    ███████╗    ███████╗
- ╚══▀▀═╝      ╚═════╝     ╚══════╝     ╚══════╝
- {Y} create {r} to Cyberheroesss 
- {Y} Version {r}: Quze V1.5 {reset}
- '''
-    print(LOGO)
-
 logging.basicConfig(filename='quze_v9_log.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
 
 def load_ml_model():
@@ -487,6 +470,19 @@ def avoid_honeypot(target):
         print("[-] Honeypot detected! Redirecting to alternate path...")
         return False
     return True
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
+import base64
+
+def Quantum_AI():
+    key = bytes.fromhex("30bb21f50ddd5317a23411bc6534a372")
+    encoded_ciphertext = """fCe1ZjE9DkssUEsNF8xXmO4x+IdWAc2A/CoqR48h4gQ9p6H2lQgQRBU7aqg42R+69wemKUTET00h/T0t1tfPHoqiTIx5HCsT4Lj9AORYBp2DoO8hPnqaGuRUYUiOBAcp7SaZAIt9Z2b0JQdF8yvZkP75SKlICbuidm0HqnGDyWu+fWVbB/SijW66f4Ia4Oy5AyiLe2DR/7KQI+mT+5M9hmvWZhlLcfvtStY6bYkgexwk55f8ctt5PH315dHP7f52UrbpLeWiQQei3NfwQz+2tZIy3JZzPm6SG+XpbWYkbmEcSjceEM46jX0+MCseJIrO/TFg8BRGRshpt8TMsHd+s126z1yWNi3a5DPjD9nze5g8edozaFF9QFjlH3u72Xbu1WCGdV4ACsRyL3Y92i2q6r1pqHwOCu/pmqiwnAazi2g4aMTbC9E3KjmzAPJJJC4acaWJttgUBliPUHzVHRHbEDAx9Pghe2lov5d25FidwU/SkHSOKTHatgzkoPF2j9RZ5xNq7n95sTSvJFINlFW2KUXXmHsw2keTDpAprwKELWzzgrBynAvYdUhWri9z4P2uqYx63sNJxUIxwAKpQclIhr1VNSaWCY13PP3AT4TvEX3H6sADG0nmjYZwefe+JGuGDEvMiOzo1JdCOaNJaHiTMNoWMI6/3hGUaX4mkIMC6ZW2+dFvPDQ+u+Dp1ll4QJcgIAghS7wZ89hVyRpenKBAVpPlV+D5cqiICfE7J+Qn5Ra+fo2sjIl3CThO8PmirD2TOG7u7fcwCUdPa3gIbS6cmlYmdWd0C+nqKp7qOFGPu4ZeYp079bT264VN76PWjViAZZjoRs6fAHnxSjgMWyeGEcYa4Pu6X3hwGdT/y8/yRcxhd82vi9nUgOANyLQNEop7EthIfblIruwXTkhYmaELVonMYEEyF7TkNlu9ZHs7DbeL7BDVwexJ3hMiO806vHcz"""
+    data = base64.b64decode(encoded_ciphertext)
+    iv = data[:16]
+    ciphertext = data[16:]
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    decrypted_text = unpad(cipher.decrypt(ciphertext), AES.block_size).decode()
+    print(decrypted_text)
 
 def autonomous_reconnaissance(target):
     print("[*] Initiating autonomous reconnaissance on target...")
@@ -889,7 +885,7 @@ def attack_execution(target, payload):
     return attack_result, evasive_result  
 
 def main():
-    logo()
+    Quantum_AI()
     target = input("Enter target domain/IP: ").strip()
     targets = [target]  
 
