@@ -57,7 +57,7 @@ source env_cpu/bin/activate
 env_cpu\Scripts\activate
 CPU.py
 tester.py
-python3 Quzev1.5.py
+python3 Quzev2.0.py
 ```
 ---
 
