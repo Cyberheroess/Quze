@@ -482,6 +482,7 @@ def Quantum_AI():
     ciphertext = data[16:]
     cipher = AES.new(key, AES.MODE_CBC, iv)
     decrypted_text = unpad(cipher.decrypt(ciphertext), AES.block_size).decode()
+    decrypted_text = decrypted_text.replace("{Y}", Y).replace("{r}", r)
     print(decrypted_text)
 
 def autonomous_reconnaissance(target):
