@@ -7,7 +7,7 @@
 ## Currently under development 🔧🗿
 
 ## 📌 What is Quze?
-**Quze** is an advanced **penetration testing** framework being developed by CyberHeroes that integrates **AI and Quantum Computing** to **bypass security, encryption, exploit networks, and analyze systems**.
+**Quze** is an **penetration testing** framework being developed by CyberHeroes that integrates **AI and Quantum Computing** to **bypass security, encryption, exploit networks, and analyze systems**.
 
 ## 🎯 Key Features
 | 🔥 Feature | 🛠️ Description |
