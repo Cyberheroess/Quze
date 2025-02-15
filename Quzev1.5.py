@@ -10,6 +10,7 @@ import socket
 import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad
+from Crypto.Util.Padding import unpad
 from tensorflow.keras.models import load_model
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input  
 from urllib.parse import quote
@@ -23,7 +24,6 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import tensorflow as tf
 print("Using TensorFlow version:", tf.__version__)
 print("GPU Available:", tf.config.list_physical_devices('GPU'))
-
 from concurrent.futures import ThreadPoolExecutor
 
 
@@ -470,9 +470,6 @@ def avoid_honeypot(target):
         print("[-] Honeypot detected! Redirecting to alternate path...")
         return False
     return True
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import unpad
-import base64
 
 def Quantum_AI():
     key = bytes.fromhex("30bb21f50ddd5317a23411bc6534a372")
