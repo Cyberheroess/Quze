@@ -56,7 +56,7 @@ source env_cpu/bin/activate
 env_cpu\Scripts\activate
 CPU.py
 tester.py
-python quze.py -t https://target.com
+python Quze.py -t https://target.com
 ```
 ---
 
