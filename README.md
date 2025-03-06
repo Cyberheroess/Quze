@@ -194,21 +194,6 @@ Quze adalah **penetration testing framework** tingkat lanjut yang menggunakan **
 | **Quantum Cloaking** | Payload disembunyikan dalam format **yang tampak seperti data biasa**, misalnya **komentar HTML, JavaScript, atau encoding tersembunyi**. |
 | **Quantum Noise Injection** | Payload disisipkan karakter acak **untuk mengacaukan pola deteksi**, mirip dengan gangguan kuantum dalam komputer kuantum. |
 
----
-
-## 🎯 Key Features & Their Explanations  
-
-| Feature | Explanation |
-|---------|------------|
-| 🤖 **AI Payload Mutation** | AI menggunakan model pembelajaran mesin untuk **mengubah payload secara dinamis**, memastikan setiap serangan unik dan sulit dideteksi. |
-| 🔐 **Quantum Encryption** | Payload dienkripsi dengan algoritma **AES-256 dan Quantum Secure Encryption**, sehingga tetap **tidak bisa didekripsi tanpa kunci khusus**. |
-| 🕵️ **Autonomous Reconnaissance** | Secara otomatis **memetakan kelemahan sistem**, menggunakan AI untuk menemukan entry point terbaik. |
-| 🏹 **Evasive Payloads** | Payload disamarkan menggunakan **multi-layer encoding** (Base64, XOR, Hex, HTML Entities) untuk menghindari deteksi WAF. |
-| 💻 **Remote Command Execution** | Memungkinkan eksekusi perintah pada server target secara stealth tanpa meninggalkan jejak forensik. |
-| 🌍 **Distributed Attack Mechanism** | Serangan dapat dilakukan secara **terdistribusi dan multi-threaded**, memungkinkan eksploitasi simultan pada beberapa target. |
-
----
-
 ## 📊 Understanding Performance  
 
 **Bagaimana Quze bekerja di lapangan?**  
