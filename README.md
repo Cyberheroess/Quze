@@ -160,30 +160,6 @@ python3 Quze.py -t Oke, Saldi ganteng! Dari script terbaru **Quze.py**, keliatan
 
 ---
 
-```md
-# 🤖 Quze - (Quantum Zero-Day)
-> **"Breaking the boundaries of security with artificial intelligence and quantum computing!"**  
-
-![17398763732765373411426392190393](https://github.com/user-attachments/assets/5b117b56-469e-4599-bdea-fe7638ddaa52)
-
----
-
-## 🚀 Currently Under Development 🔧  
-
-### 📌 What is Quze?  
-
-Quze adalah **penetration testing framework** tingkat lanjut yang menggunakan **Artificial Intelligence (AI)** dan **konsep Quantum Computing** untuk **bypass sistem keamanan, mengeksploitasi kelemahan, dan menganalisis jaringan secara otonom**.  
-
-**Apa yang membedakan Quze dari tool lain?**  
-✅ **Self-Adaptive Payloads** → Payload dapat berubah dan menyesuaikan diri berdasarkan respons sistem target.  
-✅ **Quantum-Inspired Techniques** → Menggunakan **superposisi, optimasi Bayesian, dan enkripsi kuantum** untuk menghindari deteksi.  
-✅ **Autonomous AI Mutation** → AI melakukan **evolusi payload otomatis** berdasarkan data yang dikumpulkan dari serangan sebelumnya.  
-✅ **Quantum Cloaking & Obfuscation** → Payload disamarkan dalam **kode HTML, JavaScript, atau protokol komunikasi aman**.  
-
-> **Dengan kata lain, Quze bukan sekadar exploit generator, tapi framework AI-kuantum yang bisa terus belajar dan berevolusi!**  
-
----
-
 ## 🔥 How Quze Mimics Quantum Computing  
 
 | **Quantum Concept** | **How Quze Implements It** |
