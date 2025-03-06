@@ -9,7 +9,11 @@
 ## 🚀 Currently Under Development 🔧  
 
 ### 📌 What is Quze?
-**Quze** is a next-generation Quze adalah kerangka kerja pengujian penetrasi generasi berikutnya yang dirancang oleh CyberHeroes, yang memadukan prinsip-prinsip Kecerdasan Buatan (AI) dan Komputasi Kuantum untuk melewati lapisan keamanan, mengeksploitasi kerentanan, menganalisis sistem, dan menghindari mekanisme deteksi. Tidak seperti alat tradisional, Quze bersifat adaptif dan terus berkembang berdasarkan umpan balik waktu nyata dari pertahanan keamanan, menjadikannya salah satu alat penelitian keamanan tercanggih yang tersedia.
+
+**Quze** is a next-generation Quze adalah kerangka kerja pengujian penetrasi generasi berikutnya yang dirancang oleh **CyberHeroes**, yang memadukan prinsip-prinsip Kecerdasan Buatan **(AI)**
+
+dan **Komputasi Kuantum** untuk melewati lapisan keamanan, mengeksploitasi kerentanan, menganalisis sistem, dan menghindari mekanisme deteksi. Tidak seperti alat tradisional, Quze bersifat adaptif dan terus berkembang berdasarkan umpan balik waktu nyata dari pertahanan keamanan, menjadikannya salah satu alat penelitian keamanan tercanggih yang tersedia.
+
 ---
 
 ## 🔥 Key Features & Their Explanations  
