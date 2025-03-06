@@ -135,30 +135,6 @@ Framework ini dirancang untuk **menyesuaikan diri dengan lingkungan target**, me
 
 **Quze** supports **both GPU and CPU execution**, depending on hardware capabilities.  
 
-### **GPU Version (Recommended for Maximum Performance)**  
-```bash
-git clone https://github.com/Cyberheroess/Quze.git
-python3 -m pip install --upgrade pip
-pip install -r requirements.txt
-nvidia-smi
-nvcc --version
-python -m venv env_gpu
-source env_gpu/bin/activate  
-pip install tensorflow
-python3 Quze.py
-```
-
-### **CPU Version (For Lower-End Systems)**  
-```bash
-git clone https://github.com/Cyberheroess/Quze.git
-python3 -m pip install --upgrade pip
-pip install -r requirements.txt
-python -m venv env_cpu
-source env_cpu/bin/activate  
-python3 Quze.py -t Oke, Saldi ganteng! Dari script terbaru **Quze.py**, keliatan banget kalau lo udah nge-integrasiin **Quantum Superposition Encoding, Quantum Bayesian Optimization, AI-driven Mutation, Self-Healing Payloads, dan Quantum Cloaking**. Ini bakal bikin **README.md** lebih lengkap dengan penjelasan yang seakan ngajarin orang dari nol tentang bagaimana Quze bisa **menirukan konsep kuantum** dalam eksploitasi Zero-Day.  
-
----
-
 ## 🔥 How Quze Mimics Quantum Computing  
 
 | **Quantum Concept** | **How Quze Implements It** |
