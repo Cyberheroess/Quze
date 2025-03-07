@@ -44,6 +44,7 @@ Quze mengimplementasikan **protokol enkripsi tingkat tinggi** untuk memastikan b
 
 ### **🕵️ Autonomous Reconnaissance**  
 Fitur ini memungkinkan **Quze untuk secara otomatis mengidentifikasi celah keamanan** dalam suatu sistem tanpa intervensi manual. Dengan memanfaatkan teknik pemetaan dan analisis yang mendalam, sistem dapat **mengumpulkan informasi penting** tentang target dan menentukan metode eksploitasi yang paling efektif.  
+![17413154669676868003223805948585](https://github.com/user-attachments/assets/cceb58a2-2a3f-4e1e-8ded-e20a4ac2a39a)
 
 > **Apa keunggulannya?**  
 > 🚀 Menghemat waktu dalam proses scanning dan analisis sistem.  
