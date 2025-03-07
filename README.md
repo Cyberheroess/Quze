@@ -24,6 +24,7 @@ l
 
 ### **🤖 AI Payload Mutation**  
 **Quze** menggunakan kecerdasan buatan untuk menciptakan payload yang **dapat beradaptasi dan berevolusi** berdasarkan lingkungan target. Setiap payload tidak statis, tetapi mengalami perubahan terus-menerus untuk memastikan efektivitasnya dalam menembus sistem keamanan.  
+![17413111318251617804018010646322](https://github.com/user-attachments/assets/08927a6b-0004-4084-9cbd-a5fdce5a122e)
 
 > **Mengapa ini penting?**  
 > Sistem keamanan modern memiliki mekanisme **pola deteksi** terhadap serangan umum. Dengan mutasi yang dilakukan oleh AI, setiap payload yang dihasilkan **unik dan tidak memiliki pola tetap**, membuatnya lebih sulit untuk dideteksi oleh sistem pertahanan.  
