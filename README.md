@@ -175,7 +175,7 @@ nvcc --version
 python -m venv env_gpu
 source env_gpu/bin/activate  
 pip install tensorflow
-python3 Quze.py
+python3 Quzev1.5.0.py
 ```
 
 ### **🔹 CPU Version (For Lower-End Systems)**  
