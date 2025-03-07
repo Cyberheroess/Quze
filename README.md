@@ -33,6 +33,7 @@ l
 
 ### **🔐 Quantum Encryption**  
 Quze mengimplementasikan **protokol enkripsi tingkat tinggi** untuk memastikan bahwa payload dan data komunikasi tetap aman selama proses eksploitasi. Dengan teknik ini, data yang dikirim tetap terlindungi, bahkan jika terjadi intersepsi di jaringan.  
+![17413116976439167766770261872035](https://github.com/user-attachments/assets/7b897585-7c64-478f-a70b-f960878d147f)
 
 > **Keunggulan dari pendekatan ini:**  
 > ✅ Melindungi payload dari upaya analisis balik (reverse engineering).  
