@@ -1,6 +1,6 @@
 
 # 🤖 Quze - (Quantum Zero-Day)
-> **"Breaking the boundaries of security with artificial intelligence and quantum computing!"**  
+> **"Breaking the boundaries of security with artificial intelligence and quantum computing!",**  
 
 ![17398763732765373411426392190393](https://github.com/user-attachments/assets/5b117b56-469e-4599-bdea-fe7638ddaa52)
 
