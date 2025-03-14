@@ -185,7 +185,7 @@ python3 -m pip install --upgrade pip
 pip install -r requirements.txt
 python -m venv env_cpu
 source env_cpu/bin/activate  
-python3 Quze.py -t https://target.com
+python3 Quze.py -t https://target.com -f (file proxies)
 ```
 
 ---
