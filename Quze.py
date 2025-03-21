@@ -453,35 +453,21 @@ def adaptive_payload(target):
     logging.info(f"[*] Quantum Adaptive Payload generated for target {target}: {cloaked_payload[:50]}...")
     return cloaked_payload
 
-def avoid_honeypot(target):
-    fingerprint = hashlib.sha256(target.encode()).hexdigest()[:8]
-    quantum_threshold = random.uniform(0, 1)
-    
-    # Quantum-enhanced Honeypot Detection
-    if fingerprint.startswith('00') or quantum_threshold > 0.85:
-        print('[-] High probability honeypot detected using quantum analysis! Avoiding attack...')
-        return False
-    
-    print("[*] Scanning for honeypot on target...")
-    response = requests.get(f"http://{target}/?scan=honeypot")
-    
-    # AI feedback and Quantum filtering for honeypot detection
-    if "honeypot" in response.text or quantum_threshold > 0.7:
-        print("[-] Honeypot detected! Redirecting to alternate path...")
-        return False
-    return True
-
 def Quantum_AI():
-    key = bytes.fromhex("30bb21f50ddd5317a23411bc6534a372")
-    encoded_ciphertext = """fCe1ZjE9DkssUEsNF8xXmO4x+IdWAc2A/CoqR48h4gQ9p6H2lQgQRBU7aqg42R+69wemKUTET00h/T0t1tfPHoqiTIx5HCsT4Lj9AORYBp2DoO8hPnqaGuRUYUiOBAcp7SaZAIt9Z2b0JQdF8yvZkP75SKlICbuidm0HqnGDyWu+fWVbB/SijW66f4Ia4Oy5AyiLe2DR/7KQI+mT+5M9hmvWZhlLcfvtStY6bYkgexwk55f8ctt5PH315dHP7f52UrbpLeWiQQei3NfwQz+2tZIy3JZzPm6SG+XpbWYkbmEcSjceEM46jX0+MCseJIrO/TFg8BRGRshpt8TMsHd+s126z1yWNi3a5DPjD9nze5g8edozaFF9QFjlH3u72Xbu1WCGdV4ACsRyL3Y92i2q6r1pqHwOCu/pmqiwnAazi2g4aMTbC9E3KjmzAPJJJC4acaWJttgUBliPUHzVHRHbEDAx9Pghe2lov5d25FidwU/SkHSOKTHatgzkoPF2j9RZ5xNq7n95sTSvJFINlFW2KUXXmHsw2keTDpAprwKELWzzgrBynAvYdUhWri9z4P2uqYx63sNJxUIxwAKpQclIhr1VNSaWCY13PP3AT4TvEX3H6sADG0nmjYZwefe+JGuGDEvMiOzo1JdCOaNJaHiTMNoWMI6/3hGUaX4mkIMC6ZW2+dFvPDQ+u+Dp1ll4QJcgIAghS7wZ89hVyRpenKBAVpPlV+D5cqiICfE7J+Qn5Ra+fo2sjIl3CThO8PmirD2TOG7u7fcwCUdPa3gIbS6cmlYmdWd0C+nqKp7qOFGPu4ZeYp079bT264VN76PWjViAZZjoRs6fAHnxSjgMWyeGEcYa4Pu6X3hwGdT/y8/yRcxhd82vi9nUgOANyLQNEop7EthIfblIruwXTkhYmaELVonMYEEyF7TkNlu9ZHs7DbeL7BDVwexJ3hMiO806vHcz"""
-    data = base64.b64decode(encoded_ciphertext)
-    iv = data[:16]
-    ciphertext = data[16:]
-    cipher = AES.new(key, AES.MODE_CBC, iv)
-    decrypted_text = unpad(cipher.decrypt(ciphertext), AES.block_size).decode()
-    decrypted_text = decrypted_text.replace("{Y}", Y).replace("{r}", r)
-    print(decrypted_text)
+    try:
+        key = bytes.fromhex("30bb21f50ddd5317a23411bc6534a372")
+        encoded_ciphertext = """fCe1ZjE9DkssUEsNF8xXmO4x+IdWAc2A/CoqR48h4gQ9p6H2lQgQRBU7aqg42R+69wemKUTET00h/T0t1tfPHoqiTIx5HCsT4Lj9AORYBp2DoO8hPnqaGuRUYUiOBAcp7SaZAIt9Z2b0JQdF8yvZkP75SKlICbuidm0HqnGDyWu+fWVbB/SijW66f4Ia4Oy5AyiLe2DR/7KQI+mT+5M9hmvWZhlLcfvtStY6bYkgexwk55f8ctt5PH315dHP7f52UrbpLeWiQQei3NfwQz+2tZIy3JZzPm6SG+XpbWYkbmEcSjceEM46jX0+MCseJIrO/TFg8BRGRshpt8TMsHd+s126z1yWNi3a5DPjD9nze5g8edozaFF9QFjlH3u72Xbu1WCGdV4ACsRyL3Y92i2q6r1pqHwOCu/pmqiwnAazi2g4aMTbC9E3KjmzAPJJJC4acaWJttgUBliPUHzVHRHbEDAx9Pghe2lov5d25FidwU/SkHSOKTHatgzkoPF2j9RZ5xNq7n95sTSvJFINlFW2KUXXmHsw2keTDpAprwKELWzzgrBynAvYdUhWri9z4P2uqYx63sNJxUIxwAKpQclIhr1VNSaWCY13PP3AT4TvEX3H6sADG0nmjYZwefe+JGuGDEvMiOzo1JdCOaNJaHiTMNoWMI6/3hGUaX4mkIMC6ZW2+dFvPDQ+u+Dp1ll4QJcgIAghS7wZ89hVyRpenKBAVpPlV+D5cqiICfE7J+Qn5Ra+fo2sjIl3CThO8PmirD2TOG7u7fcwCUdPa3gIbS6cmlYmdWd0C+nqKp7qOFGPu4ZeYp079bT264VN76PWjViAZZjoRs6fAHnxSjgMWyeGEcYa4Pu6X3hwGdT/y8/yRcxhd82vi9nUgOANyLQNEop7EthIfblIruwXTkhYmaELVonMYEEyF7TkNlu9ZHs7DbeL7BDVwexJ3hMiO806vHcz"""
+        data = base64.b64decode(encoded_ciphertext)
+        iv = data[:16]
+        ciphertext = data[16:]
+        cipher = AES.new(key, AES.MODE_CBC, iv)
+        decrypted_text = unpad(cipher.decrypt(ciphertext), AES.block_size).decode()
+        decrypted_text = decrypted_text.replace("{Y}", "").replace("{r}", "").replace("{R}", "")
+        print("Hasil Dekripsi:\n", decrypted_text)
 
+    except Exception as e:
+        print("Terjadi kesalahan saat dekripsi:", str(e))
+        
 def autonomous_reconnaissance(target):
     print("[*] Initiating autonomous reconnaissance on target...")
     try:
