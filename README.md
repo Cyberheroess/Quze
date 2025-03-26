@@ -53,14 +53,14 @@ git clone https://github.com/Cyberheroess/Quze.git
 cd Quze
 pip install -r requirements.txt
 python3 Quze.py --gpu
-
+```
 🔹 CPU Installation
-
+```
 git clone https://github.com/Cyberheroess/Quze.git
 cd Quze
 pip install -r requirements.txt
 python3 Quze.py --cpu
-
+```
 
 ---
 
