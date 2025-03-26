@@ -52,7 +52,7 @@ Quze supports **GPU (faster execution) and CPU (lightweight mode).**
 git clone https://github.com/Cyberheroess/Quze.git
 cd Quze
 pip install -r requirements.txt
-python3 Quze.py --gpu
+python3 Quzev1.5.0.py 
 ```
 🔹 CPU Installation
 ```
