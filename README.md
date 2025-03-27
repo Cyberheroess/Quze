@@ -1,6 +1,4 @@
 
----
-
 # 🤖 Quze - (Quantum Zero-Day)  
 > **"Exploiting security with AI and advanced attack strategies!"**  
 
@@ -21,16 +19,16 @@ It **does NOT use Quantum Computing** but applies **quantum-inspired techniques 
 
 ## Key Features  
 
-### ** AI Payload Mutation**  
+###  AI Payload Mutation  
 ✔ **Continuously evolves payloads to avoid detection.**  
 ✔ Uses AI-driven transformations to **generate unique attack vectors dynamically.**  
-### **🕵️ Autonomous Reconnaissance**  
+### 🕵️ Autonomous Reconnaissance 
 ✔ **Automatically identifies security vulnerabilities.**  
 ✔ AI-driven analysis helps **adapt attack methods based on the target.**  
-### **🏹 Evasive Payloads**  
-✔ Payloads are crafted to **bypass signature-based and behavior-based detections.**  
+### 🏹 Evasive Payloads
+✔ Payloads are crafted to **bypass signature-based and behavior-based detections.  
 ✔ **Obfuscation techniques** ensure stealth execution.  
-### **💻 Remote Command Execution**  
+### 💻 Remote Command Execution  
 ✔ **Execute commands on the target without leaving forensic traces.**  
 ✔ Utilizes hidden communication channels for stealth operations.  
 ### **🎭 Advanced Cloaking & Obfuscation**  
@@ -39,7 +37,7 @@ It **does NOT use Quantum Computing** but applies **quantum-inspired techniques 
 ---
 ## 📌 Installation & Usage  
 Quze supports **GPU (faster execution) and CPU (lightweight mode).**  
-### **🔹 GPU Installation (Recommended for Maximum Performance)**  
+### 🔹 GPU Installation (Recommended for Maximum Performance) 
 ```bash
 git clone https://github.com/Cyberheroess/Quze.git
 cd Quze
