@@ -1457,7 +1457,7 @@ def attack_execution(target, payload, proxy_file=None):
     return attack_result, evasive_result
 
 def main():
-    parser = argparse.ArgumentParser(description="Quze - Quantum Zero-Day Exploitation")
+    parser = argparse.ArgumentParser(description="Quzee is an advanced AI-powered payload mutation and WAF bypass framework that leverages machine learning, adaptive cloaking, and multi-underpass payload optimization to generate stealthy attack vectors, integrating neural mutation, probabilistic selection, and quantum Bayesian optimization to enhance attack efficacy against modern security defenses.")
     parser.add_argument("-t", "--target", help="Target domain/IP", required=True)
     parser.add_argument("-f", "--file", help="File proxy opsional")
     args = parser.parse_args()
