@@ -19,34 +19,26 @@ It **does NOT use Quantum Computing** but applies **quantum-inspired techniques 
 
 ---
 
-## 🔥 Key Features  
+## Key Features  
 
-### **🤖 AI Payload Mutation**  
+### ** AI Payload Mutation**  
 ✔ **Continuously evolves payloads to avoid detection.**  
 ✔ Uses AI-driven transformations to **generate unique attack vectors dynamically.**  
-
 ### **🕵️ Autonomous Reconnaissance**  
 ✔ **Automatically identifies security vulnerabilities.**  
 ✔ AI-driven analysis helps **adapt attack methods based on the target.**  
-
 ### **🏹 Evasive Payloads**  
 ✔ Payloads are crafted to **bypass signature-based and behavior-based detections.**  
 ✔ **Obfuscation techniques** ensure stealth execution.  
-
 ### **💻 Remote Command Execution**  
 ✔ **Execute commands on the target without leaving forensic traces.**  
 ✔ Utilizes hidden communication channels for stealth operations.  
-
 ### **🎭 Advanced Cloaking & Obfuscation**  
 ✔ Payloads are disguised as **legitimate traffic.**  
 ✔ **Defeats anomaly detection and AI-powered monitoring.**  
-
 ---
-
 ## 📌 Installation & Usage  
-
 Quze supports **GPU (faster execution) and CPU (lightweight mode).**  
-
 ### **🔹 GPU Installation (Recommended for Maximum Performance)**  
 ```bash
 git clone https://github.com/Cyberheroess/Quze.git
@@ -61,7 +53,6 @@ cd Quze
 pip install -r requirements.txt
 python3 Quze.py --cpu
 ```
-
 ---
 
 ⚠ Legal & Ethical Considerations
@@ -75,8 +66,6 @@ Use responsibly!
 ✖ NOT allowed for unauthorized system exploitation.
 
 CyberHeroes is not responsible for any misuse of this framework.
-
-
 ---
 
 📢 Contributing & Support
