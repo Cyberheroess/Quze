@@ -44,7 +44,7 @@ cd Quze
 pip install -r requirements.txt
 python3 Quzev1.5.0.py 
 ```
-🔹 CPU Installation
+🔹 CPU Installation **Quze version 2.0**
 ```
 git clone https://github.com/Cyberheroess/Quze.git
 cd Quze
