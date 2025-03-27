@@ -47,4 +47,4 @@ model.fit(X_train, y_train, epochs=50, batch_size=32, validation_data=(X_test, y
           callbacks=[early_stopping, reduce_lr])
 
 # Simpan model
-model.save("ml_model_v5.h5")
+model.save("ml_model_v6.h5")
