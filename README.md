@@ -49,7 +49,7 @@ python3 Quzev1.5.0.py
 git clone https://github.com/Cyberheroess/Quze.git
 cd Quze
 pip install -r requirements.txt
-python3 Quze.py --cpu
+python3 Quze.py -t (target) -f (proxy_file)
 ```
 ---
 
