@@ -5,7 +5,7 @@
 ![Banner](https://github.com/user-attachments/assets/5b117b56-469e-4599-bdea-fe7638ddaa52)  
 
 ---
-
+# **❗under development, not yet fully finished❗**
 ## 🚀 What is Quze?  
 
 **Quze** is an advanced penetration testing framework developed by **CyberHeroes**.  
