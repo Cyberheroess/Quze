@@ -26,7 +26,7 @@ print("Using TensorFlow version:", tf.__version__)
 print("GPU Available:", tf.config.list_physical_devices('GPU'))
 from concurrent.futures import ThreadPoolExecutor
 import argparse
-from scipy.optimize import minimize  
+# from scipy.optimize import minimize  
 
 R = "\033[91m"  
 Y = "\033[93m"  
