@@ -140,6 +140,6 @@ BATCH_SIZE = 8192  # Upgrade ke batch besar biar lebih stabil
 history = model.fit(X_train, y_train, epochs=EPOCHS, batch_size=BATCH_SIZE, validation_split=0.2)
 
 logging.info("🎉 Training selesai")
-MODEL_PATH = "ml_model_v7.1.h5"
+MODEL_PATH = "ml_model_v6.h5"
 model.save(MODEL_PATH)
 logging.info(f"✅ Model berhasil disimpan di {MODEL_PATH}")
