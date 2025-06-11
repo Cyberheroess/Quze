@@ -93,15 +93,6 @@ def load_ml_model():
         print(f"[-] Unexpected error: {e}")
         return None
         
-    except FileNotFoundError as e:
-        logging.error(f"[-] Error: {e}")
-        print(f"[-] {e}")
-        return None
-    except Exception as e:
-        logging.error(f"[-] Unexpected error loading AI Model: {e}")
-        print(f"[-] Unexpected error: {e}")
-        return None
-        
 def ai_payload_mutation_v2(model, payload, max_iterations=20):
     """
     Menghasilkan payload yang berevolusi dengan AI Mutation, Multi-Underpass Payload Optimization, 
