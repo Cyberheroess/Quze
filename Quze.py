@@ -23,7 +23,6 @@ import hashlib
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import tensorflow as tf
-import logging
 print("Using TensorFlow version:", tf.__version__)
 print("GPU Available:", tf.config.list_physical_devices('GPU'))
 from concurrent.futures import ThreadPoolExecutor
