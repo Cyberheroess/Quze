@@ -625,45 +625,177 @@ def Quantum_AI():
 
 def autonomous_reconnaissance(target):
     """
-    Quantum-Based Autonomous Reconnaissance dengan AI-powered Analysis, Quantum Bayesian Filtering, 
-    dan Distributed Quantum Reconnaissance untuk mengumpulkan data tanpa terdeteksi.
+    Advanced Reconnaissance: AI-powered + Passive Recon + Deep Analysis
     """
-    logging.info(f"[*] Initiating autonomous reconnaissance on target: {target}...")
+    import requests
+    import dns.resolver
+    import whois
+    from urllib.parse import urljoin
+    import socket
+    import ssl
+    import json
+    import csv
+    import random
+    import logging
+    import re
+    from requests.adapters import HTTPAdapter, Retry
+    from bs4 import BeautifulSoup
 
-    # Step 1: Quantum Bayesian Filtering untuk menganalisis target
-    quantum_threshold = random.uniform(0, 1)
-    if quantum_threshold > 0.85:
-        logging.warning("[-] High probability of being monitored. Switching to stealth mode...")
-        return None
+    logging.info(f"[*] Starting advanced reconnaissance on: {target}")
 
-    # Step 2: AI-Powered Web Scraping untuk analisis konten
+    recon_data = {
+        "target": target,
+        "dns_records": {},
+        "whois": None,
+        "server": None,
+        "tls_cert": {},
+        "robots_txt": None,
+        "sitemap": None,
+        "waf_fingerprint": None,
+        "headers": {},
+        "cookies": [],
+        "cookie_flags": [],
+        "content_length": 0,
+        "status_code_home": None,
+        "allowed_methods": [],
+        "common_paths_status": {},
+        "access_control": {},
+        "forms_detected": 0,
+        "input_fields": 0,
+        "textareas": 0,
+        "select_fields": 0,
+        "external_scripts": 0,
+        "js_links": 0,
+        "iframes": 0,
+        "meta_tags": 0,
+        "inline_event_handlers": 0,
+        "comments_in_html": 0,
+        "anomaly_index": None,
+        "ai_analysis": None
+    }
+
+    base_url = f"http://{target}" if not target.startswith("http") else target
+    session = requests.Session()
+    retries = Retry(total=3, backoff_factor=0.5)
+    session.mount('http://', HTTPAdapter(max_retries=retries))
+
+    # DNS Records
     try:
-        session = requests.Session()
-        retries = Retry(total=3, backoff_factor=0.5)
-        session.mount('http://', HTTPAdapter(max_retries=retries))
+        record_types = ['A', 'AAAA', 'CNAME', 'MX', 'NS', 'TXT']
+        for rtype in record_types:
+            try:
+                answers = dns.resolver.resolve(target, rtype)
+                recon_data['dns_records'][rtype] = [str(r.to_text()) for r in answers]
+            except:
+                recon_data['dns_records'][rtype] = []
+    except Exception as e:
+        logging.warning(f"[-] DNS lookup failed: {e}")
 
-        response = session.get(f"http://{target}/", timeout=5)
-        if response.status_code == 200:
-            logging.info("[+] Successfully retrieved reconnaissance data.")
+    # WHOIS
+    try:
+        whois_info = whois.whois(target)
+        recon_data['whois'] = str({
+            'registrar': whois_info.registrar,
+            'creation_date': str(whois_info.creation_date),
+            'org': whois_info.org
+        })
+    except:
+        recon_data['whois'] = 'Unavailable'
 
-            # Step 3: Quantum Bayesian Analysis untuk mencari pola & anomali
-            analysis_result = ai_data_analysis(response.text)
-            anomaly_index = random.uniform(0.3, 0.9)
-            if anomaly_index > 0.75:
-                logging.warning("[-] Anomalous patterns detected in target response. Proceeding with caution...")
+    try:
+        res = session.get(base_url, timeout=10)
+        recon_data["headers"] = dict(res.headers)
+        recon_data["server"] = res.headers.get("Server")
+        recon_data["cookies"] = list(session.cookies.get_dict().keys())
+        recon_data["content_length"] = len(res.text)
+        recon_data["status_code_home"] = res.status_code
 
-            # Step 4: Distributed Quantum Reconnaissance (DQR) untuk analisis lebih dalam
-            dqr_results = distributed_quantum_reconnaissance(target)
-            logging.info(f"[*] DQR Results: {dqr_results}")
+        if "set-cookie" in res.headers:
+            raw_cookies = res.headers.get("set-cookie").split(',')
+            for c in raw_cookies:
+                flags = []
+                if "HttpOnly" in c: flags.append("HttpOnly")
+                if "Secure" in c: flags.append("Secure")
+                if flags:
+                    recon_data["cookie_flags"].append({"cookie": c.split("=")[0], "flags": flags})
 
-            return analysis_result
+        method_probe = session.options(base_url)
+        recon_data["allowed_methods"] = method_probe.headers.get("Allow", "").split(",")
 
-        else:
-            logging.warning(f"[-] Reconnaissance failed with status code: {response.status_code}")
+        for h in ["Access-Control-Allow-Origin", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers"]:
+            recon_data["access_control"][h] = res.headers.get(h)
+
+        try:
+            hostname = target.replace("https://", "").replace("http://", "").split("/")[0]
+            ctx = ssl.create_default_context()
+            with ctx.wrap_socket(socket.socket(), server_hostname=hostname) as s:
+                s.settimeout(3)
+                s.connect((hostname, 443))
+                cert = s.getpeercert()
+                recon_data["tls_cert"] = {
+                    "issuer": cert.get("issuer"),
+                    "subject": cert.get("subject"),
+                    "notAfter": cert.get("notAfter")
+                }
+        except:
+            recon_data["tls_cert"] = "Unavailable"
+
+        try:
+            robots = session.get(urljoin(base_url, "/robots.txt"))
+            if robots.status_code == 200:
+                recon_data["robots_txt"] = robots.text[:300]
+        except: pass
+
+        try:
+            sitemap = session.get(urljoin(base_url, "/sitemap.xml"))
+            if sitemap.status_code == 200:
+                recon_data["sitemap"] = sitemap.text[:300]
+        except: pass
+
+        if "cloudflare" in str(res.headers).lower():
+            recon_data["waf_fingerprint"] = "Cloudflare"
+        elif "sucuri" in str(res.headers).lower():
+            recon_data["waf_fingerprint"] = "Sucuri"
+
+        common_paths = ["/admin", "/login", "/upload", "/dashboard", "/api", "/search", "/user", "/auth", "/config", "/portal"]
+        for path in common_paths:
+            try:
+                r = session.get(urljoin(base_url, path))
+                recon_data["common_paths_status"][path] = r.status_code
+            except:
+                recon_data["common_paths_status"][path] = "timeout"
+
+        soup = BeautifulSoup(res.text, "html.parser")
+        recon_data["forms_detected"] = len(soup.find_all("form"))
+        recon_data["input_fields"] = len(soup.find_all("input"))
+        recon_data["textareas"] = len(soup.find_all("textarea"))
+        recon_data["select_fields"] = len(soup.find_all("select"))
+        recon_data["js_links"] = len(soup.find_all("script"))
+        recon_data["external_scripts"] = len([s for s in soup.find_all("script") if s.get("src")])
+        recon_data["iframes"] = len(soup.find_all("iframe"))
+        recon_data["meta_tags"] = len(soup.find_all("meta"))
+        recon_data["inline_event_handlers"] = len(re.findall(r'on\w+="', res.text))
+        recon_data["comments_in_html"] = len(re.findall(r'<!--.*?-->', res.text, re.DOTALL))
+
+        from model_analysis import load_analysis_model, ai_data_analysis
+        model = load_analysis_model()
+        recon_data["ai_analysis"] = ai_data_analysis(res.text, model)
+
+        recon_data["anomaly_index"] = round(random.uniform(0.3, 0.95), 2)
+
+        with open("dataset_quze.csv", "a", newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=recon_data.keys())
+            if f.tell() == 0:
+                writer.writeheader()
+            writer.writerow(recon_data)
+
+        logging.info("[✓] Reconnaissance complete and data logged.")
+        return recon_data
+
     except requests.RequestException as e:
-        logging.error(f"[-] Reconnaissance error: {e}")
-
-    return None
+        logging.error(f"[-] Recon error: {e}")
+        return None
+        
 def distributed_quantum_attack(targets, payload):
     """
     Quantum-Based Distributed Attack dengan Quantum Annealing Optimization, 
