@@ -29,6 +29,15 @@ print("GPU Available:", tf.config.list_physical_devices('GPU'))
 from concurrent.futures import ThreadPoolExecutor
 import argparse
 # from scipy.optimize import minimize  
+import requests
+import dns.resolver
+import whois
+from urllib.parse import urljoin
+import ssl
+import csv
+import re
+from requests.adapters import HTTPAdapter, Retry
+from bs4 import BeautifulSoup
 
 R = "\033[91m"  
 Y = "\033[93m"  
@@ -655,20 +664,6 @@ def autonomous_reconnaissance(target):
     """
     Advanced Reconnaissance: AI-powered + Passive Recon + Deep Analysis
     """
-    import requests
-    import dns.resolver
-    import whois
-    from urllib.parse import urljoin
-    import socket
-    import ssl
-    import json
-    import csv
-    import random
-    import logging
-    import re
-    from requests.adapters import HTTPAdapter, Retry
-    from bs4 import BeautifulSoup
-
     logging.info(f"[*] Starting advanced reconnaissance on: {target}")
 
     recon_data = {
@@ -823,6 +818,51 @@ def autonomous_reconnaissance(target):
     except requests.RequestException as e:
         logging.error(f"[-] Recon error: {e}")
         return None
+
+def ai_data_analysis(page_html, model):
+    """
+    Analisis AI terhadap halaman HTML dan struktur konten untuk mendeteksi anomali atau pola mencurigakan.
+
+    Args:
+        page_html (str): Konten HTML dari target.
+        model (keras.Model): Model AI dari ml_analisis.h5.
+
+    Returns:
+        str: Label atau deskripsi hasil klasifikasi/analisis.
+    """
+    try:
+        soup = BeautifulSoup(page_html, "html.parser")
+
+        # Ekstrak beberapa fitur numerik dari HTML (jumlah tag, scripts, forms, komentar, dll)
+        features = np.array([
+            len(soup.find_all("form")),
+            len(soup.find_all("script")),
+            len([s for s in soup.find_all("script") if s.get("src")]),
+            len(soup.find_all("iframe")),
+            len(soup.find_all("input")),
+            len(soup.find_all("meta")),
+            len(soup.find_all("textarea")),
+            len(soup.find_all("select")),
+            len(re.findall(r'on\w+="', page_html)),  # inline JS event handlers
+            len(re.findall(r'<!--.*?-->', page_html, re.DOTALL))  # comments
+        ]).reshape(1, -1)
+
+        prediction = model.predict(features)
+
+        # Interpretasi hasil (misalnya: klasifikasi 0 = clean, 1 = suspicious, 2 = vulnerable)
+        if prediction[0][0] < 0.33:
+            result = "clean"
+        elif prediction[0][0] < 0.66:
+            result = "suspicious"
+        else:
+            result = "vulnerable"
+
+        logging.info(f"[*] AI Recon Analysis Result: {result}")
+        return result
+
+    except Exception as e:
+        logging.error(f"[-] Error saat analisis AI: {e}")
+        return "error"
         
 def distributed_quantum_attack(targets, payload):
     """
