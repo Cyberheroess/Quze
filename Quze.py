@@ -13,6 +13,7 @@ from Crypto.Util.Padding import pad
 from Crypto.Util.Padding import unpad
 from tensorflow.keras.models import load_model
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input  
+from tensorflow.keras.models import load_model
 from urllib.parse import quote
 from urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
@@ -22,6 +23,7 @@ import hashlib
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import tensorflow as tf
+import logging
 print("Using TensorFlow version:", tf.__version__)
 print("GPU Available:", tf.config.list_physical_devices('GPU'))
 from concurrent.futures import ThreadPoolExecutor
@@ -34,6 +36,32 @@ r = "\033[0m"
 
 logging.basicConfig(filename='quze_v9_log.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
 
+def load_analysis_model():
+    """
+    Memuat model AI untuk analisis recon berbasis data HTML dan hasil passive recon.
+    """
+
+    model_path = 'ml_analisis.h5'
+    try:
+        if not os.path.exists(model_path):
+            raise FileNotFoundError(f"Model analisis tidak ditemukan di path: {model_path}")
+
+        # Cek integritas model (jika hash tersedia)
+        with open(model_path, 'rb') as f:
+            model_hash = hashlib.sha256(f.read()).hexdigest()
+        logging.info(f"[*] Hash ml_analisis.h5: {model_hash}")
+
+        # Load model
+        model = load_model(model_path, compile=False)
+        tf.config.optimizer.set_jit(True)
+
+        logging.info("[+] Model analisis recon berhasil dimuat.")
+        return model
+
+    except Exception as e:
+        logging.error(f"[-] Gagal memuat model analisis: {e}")
+        return None
+        
 def load_ml_model():
     try:
         logging.info("[*] Initializing AI model loading process.")
