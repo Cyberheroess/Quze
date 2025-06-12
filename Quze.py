@@ -78,11 +78,11 @@ def load_ml_model():
             raise FileNotFoundError(f"Model file {model_path} not found. Ensure the model is present in the correct directory.")
 
         logging.info(f"[*] Verifying integrity of {model_path}...")
-        
+
         # Validasi SHA-256 untuk deteksi file corrupt
         with open(model_path, 'rb') as model_file:
             model_integrity = hashlib.sha256(model_file.read()).hexdigest()
-        
+
         expected_hash = "EXPECTED_HASH_VALUE_HERE"  # Ganti dengan hash valid jika tersedia
         if expected_hash and model_integrity != expected_hash:
             raise ValueError(f"Integrity check failed! Model hash {model_integrity} does not match expected hash {expected_hash}.")
@@ -96,6 +96,17 @@ def load_ml_model():
         logging.info("[+] AI Model loaded successfully with version v6.")
 
         logging.info("[*] Optimizing model for performance (Lazy Loading)...")
+
+        # === Integrasi dataset recon jika tersedia ===
+        recon_csv = "dataset_quze.csv"
+        if os.path.exists(recon_csv):
+            import pandas as pd
+            try:
+                recon_df = pd.read_csv(recon_csv)
+                logging.info(f"[+] Recon dataset loaded with {len(recon_df)} entries. Integrating...")
+                # (Opsional) Bisa digunakan untuk fine-tuning/guided-payload di modul terpisah
+            except Exception as e:
+                logging.warning(f"[!] Failed to load recon dataset: {e}")
 
         # Penyesuaian input test agar lebih fleksibel
         test_payload = np.random.rand(1, model.input_shape[-1])  # Dinamis sesuai model
@@ -819,48 +830,68 @@ def autonomous_reconnaissance(target):
 
 def ai_data_analysis(page_html, model):
     """
-    Analisis AI terhadap halaman HTML dan struktur konten untuk mendeteksi anomali atau pola mencurigakan.
+    Analisis AI terhadap konten HTML target berdasarkan struktur recon.
+
+    Menghasilkan klasifikasi keamanan (clean, suspicious, vulnerable) berdasarkan jumlah elemen penting
+    seperti script, form, iframe, dan event handler JS yang sering dimanfaatkan dalam eksploitasi.
 
     Args:
-        page_html (str): Konten HTML dari target.
-        model (keras.Model): Model AI dari ml_analisis.h5.
+        page_html (str): HTML target yang akan dianalisis.
+        model (keras.Model): Model klasifikasi dari ml_analisis.h5.
 
     Returns:
-        str: Label atau deskripsi hasil klasifikasi/analisis.
+        str: Label hasil analisis recon AI ('clean', 'suspicious', 'vulnerable')
     """
+    import numpy as np
+    from bs4 import BeautifulSoup
+    import re
+    import logging
+
     try:
         soup = BeautifulSoup(page_html, "html.parser")
 
-        # Ekstrak beberapa fitur numerik dari HTML (jumlah tag, scripts, forms, komentar, dll)
+        # Ekstraksi fitur numerik sesuai dengan dataset_quze.csv dan autonomous_reconnaissance()
+        forms_detected = len(soup.find_all("form"))
+        input_fields = len(soup.find_all("input"))
+        textareas = len(soup.find_all("textarea"))
+        select_fields = len(soup.find_all("select"))
+        js_links = len(soup.find_all("script"))
+        external_scripts = len([s for s in soup.find_all("script") if s.get("src")])
+        iframes = len(soup.find_all("iframe"))
+        meta_tags = len(soup.find_all("meta"))
+        inline_event_handlers = len(re.findall(r'on\w+="', page_html))
+        comments_in_html = len(re.findall(r'<!--.*?-->', page_html, re.DOTALL))
+
+        # Fitur sebagai input ke model AI (urutan penting)
         features = np.array([
-            len(soup.find_all("form")),
-            len(soup.find_all("script")),
-            len([s for s in soup.find_all("script") if s.get("src")]),
-            len(soup.find_all("iframe")),
-            len(soup.find_all("input")),
-            len(soup.find_all("meta")),
-            len(soup.find_all("textarea")),
-            len(soup.find_all("select")),
-            len(re.findall(r'on\w+="', page_html)),  # inline JS event handlers
-            len(re.findall(r'<!--.*?-->', page_html, re.DOTALL))  # comments
+            forms_detected,
+            input_fields,
+            textareas,
+            select_fields,
+            js_links,
+            external_scripts,
+            iframes,
+            meta_tags,
+            inline_event_handlers,
+            comments_in_html
         ]).reshape(1, -1)
 
         prediction = model.predict(features)
+        score = float(prediction[0][0])
 
-        # Interpretasi hasil (misalnya: klasifikasi 0 = clean, 1 = suspicious, 2 = vulnerable)
-        if prediction[0][0] < 0.33:
-            result = "clean"
-        elif prediction[0][0] < 0.66:
-            result = "suspicious"
+        if score < 0.33:
+            label = "clean"
+        elif score < 0.66:
+            label = "suspicious"
         else:
-            result = "vulnerable"
+            label = "vulnerable"
 
-        logging.info(f"[*] AI Recon Analysis Result: {result}")
-        return result
+        logging.info(f"[*] AI Recon Analysis Score: {score:.4f} => {label}")
+        return label
 
     except Exception as e:
-        logging.error(f"[-] Error saat analisis AI: {e}")
-        return "error"
+        logging.error(f"[-] Gagal melakukan analisis AI terhadap HTML: {e}")
+        return "analysis_error"
         
 def distributed_quantum_attack(targets, payload):
     """
