@@ -29,7 +29,6 @@ print("GPU Available:", tf.config.list_physical_devices('GPU'))
 from concurrent.futures import ThreadPoolExecutor
 import argparse
 # from scipy.optimize import minimize  
-import requests
 import dns.resolver
 import whois
 from urllib.parse import urljoin
