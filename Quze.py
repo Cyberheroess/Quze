@@ -316,48 +316,99 @@ def dynamic_payload_obfuscation(payload):
     logging.info(f"[*] Quantum Obfuscated Payload Generated: {cloaked_payload[:50]}...")
     return cloaked_payload
 
-def analyze_payload_feedback(payload):
+def analyze_payload_feedback(payload, target=None):
     """
-    Menganalisis efektivitas payload dengan Quantum Bayesian Filtering, Grover’s Algorithm,
-    dan Quantum Annealing untuk memaksimalkan tingkat keberhasilan payload.
+    Menganalisis efektivitas payload berdasarkan model analisis recon (ml_analisis.h5)
+    dan menggabungkan Quantum Bayesian + recon AI classification (clean/suspicious/vulnerable).
     """
-    logging.info("[*] Initiating Quantum Bayesian Feedback Analysis...")
+    logging.info("[*] Quantum Feedback Analysis with AI Recon Context...")
 
-    # Step 1: Simulasi Respons Keamanan
-    success_rate = random.uniform(0.5, 1.0)  
-    evasion_index = random.uniform(0.4, 0.95)
+    try:
+        model = load_analysis_model()
+        if not model:
+            raise RuntimeError("Model analisis tidak tersedia.")
 
-    # Step 2: Quantum Bayesian Filtering
-    probability_adjustment = success_rate * evasion_index
-    if probability_adjustment > 0.8:
-        success_rate += 0.1  
+        # Ambil konteks recon berdasarkan target
+        recon_row = None
+        if target:
+            import pandas as pd
+            try:
+                df = pd.read_csv("dataset_quze.csv")
+                match = df[df["target"].str.contains(target, na=False)]
+                if not match.empty:
+                    recon_row = match.iloc[-1]
+            except Exception as e:
+                logging.warning(f"[!] Gagal load recon untuk {target}: {e}")
 
-    # Step 3: Quantum Grover’s Algorithm (Pencarian Pola Optimal)
-    def grover_optimization(x):
-        return -1 * (x['success_rate'] * x['evasion_index'])  
+        if recon_row is not None:
+            # Ambil 10 fitur numerik utama sesuai input ke model analisis
+            features = np.array([
+                recon_row["forms_detected"],
+                recon_row["js_links"],
+                recon_row["external_scripts"],
+                recon_row["iframes"],
+                recon_row["input_fields"],
+                recon_row["meta_tags"],
+                recon_row["textareas"],
+                recon_row["select_fields"],
+                recon_row["inline_event_handlers"],
+                recon_row["comments_in_html"]
+            ]).reshape(1, -1)
 
-    optimized_feedback = minimize(grover_optimization, {'success_rate': success_rate, 'evasion_index': evasion_index}, method='Powell')
-    success_rate = optimized_feedback.x['success_rate']
-    evasion_index = optimized_feedback.x['evasion_index']
+            pred = model.predict(features)
+            score = float(pred[0][0])
+            base_score = {
+                "clean": 0.3,
+                "suspicious": 0.6,
+                "vulnerable": 0.9
+            }
 
-    # Step 4: Quantum Annealing Optimization (Fine-Tuning Score)
-    annealing_factor = random.uniform(0.8, 1.2)
-    success_rate *= annealing_factor
-    evasion_index *= annealing_factor
+            if score < 0.33:
+                label = "clean"
+            elif score < 0.66:
+                label = "suspicious"
+            else:
+                label = "vulnerable"
 
-    # Step 5: Quantum Probability Scoring (Entanglement Analysis)
-    quantum_score = (success_rate + evasion_index) / 2  
+            success_rate = base_score[label] + random.uniform(-0.05, 0.05)
+            evasion_index = random.uniform(0.5, 0.95)
 
-    # Step 6: AI-driven Data Logging
-    logging.info(f"[*] Optimized Success Rate: {success_rate:.2f}")
-    logging.info(f"[*] Quantum Evasion Index: {evasion_index:.2f}")
-    logging.info(f"[*] Quantum Score: {quantum_score:.2f}")
+        else:
+            logging.warning("[!] Tidak ditemukan data recon, fallback ke random.")
+            success_rate = random.uniform(0.5, 1.0)
+            evasion_index = random.uniform(0.4, 0.95)
 
-    return {
-        'success_rate': success_rate,
-        'evasion_index': evasion_index,
-        'quantum_score': quantum_score
-    }
+        # Grover Optimization
+        def grover_optimization(x):
+            return -1 * (x['success_rate'] * x['evasion_index'])
+
+        optimized = minimize(grover_optimization, {'success_rate': success_rate, 'evasion_index': evasion_index}, method='Powell')
+        success_rate = optimized.x['success_rate']
+        evasion_index = optimized.x['evasion_index']
+
+        # Annealing Fine-tune
+        annealing = random.uniform(0.85, 1.15)
+        success_rate *= annealing
+        evasion_index *= annealing
+
+        quantum_score = (success_rate + evasion_index) / 2
+
+        logging.info(f"[*] AI-Driven Payload Feedback => Label: {label}, Score: {quantum_score:.4f}")
+        return {
+            'success_rate': success_rate,
+            'evasion_index': evasion_index,
+            'quantum_score': quantum_score,
+            'ai_label': label
+        }
+
+    except Exception as e:
+        logging.error(f"[-] Error in AI Payload Feedback: {e}")
+        return {
+            'success_rate': 0.5,
+            'evasion_index': 0.5,
+            'quantum_score': 0.5,
+            'ai_label': "unknown"
+        }
 def postprocess_output(output_vector):
     """
     Mengonversi output dari neural network menjadi string yang valid menggunakan 
@@ -391,44 +442,66 @@ def postprocess_output(output_vector):
         print(f"[-] Error in Quantum postprocessing: {e}")
         return ""
 
-def quantum_error_correction(payload):
+def quantum_error_correction(payload, target=None):
     """
-    Quantum Error Correction menggunakan Hamming Code, Parity Check, dan Bayesian Filtering
-    untuk memastikan payload tetap valid dan stealthy.
+    Quantum Error Correction yang adaptif berdasarkan recon feature seperti iframe, forms, dll.
     """
-    logging.info("[*] Initiating Quantum Error Correction...")
+    logging.info("[*] Adaptive Quantum Error Correction Initiated...")
 
-    # Step 1: Quantum Hamming Code (Memperbaiki bit error dalam payload)
+    # Step 1: Load konteks recon dari dataset_quze.csv
+    recon_features = {}
+    if target:
+        try:
+            import pandas as pd
+            df = pd.read_csv("dataset_quze.csv")
+            match = df[df["target"].str.contains(target, na=False)]
+            if not match.empty:
+                row = match.iloc[-1]
+                recon_features = row.to_dict()
+        except Exception as e:
+            logging.warning(f"[!] Gagal load recon context: {e}")
+
+    # Step 2: Encoding - Quantum Hamming Code
     def hamming_encode(data):
         encoded_data = []
         for char in data:
-            binary = format(ord(char), '08b')  # Convert to binary
+            binary = format(ord(char), '08b')
             parity_bits = [
                 binary[0] ^ binary[1] ^ binary[3] ^ binary[4] ^ binary[6],
                 binary[0] ^ binary[2] ^ binary[3] ^ binary[5] ^ binary[6],
                 binary[1] ^ binary[2] ^ binary[3] ^ binary[7],
                 binary[4] ^ binary[5] ^ binary[6] ^ binary[7]
             ]
-            encoded_data.append(binary + ''.join(map(str, parity_bits)))  
+            encoded_data.append(binary + ''.join(map(str, parity_bits)))
         return ''.join(encoded_data)
 
     encoded_payload = hamming_encode(payload)
 
-    # Step 2: Quantum Parity Check (Menyesuaikan payload dengan korelasi kuantum)
+    # Step 3: Parity Check Decode
     def parity_check(data):
         return ''.join([chr(int(data[i:i+8], 2)) for i in range(0, len(data), 8)])
 
     corrected_payload = parity_check(encoded_payload)
 
-    # Step 3: Bayesian Filtering (Menyesuaikan probabilitas perubahan payload)
-    noise_factor = np.random.uniform(0.1, 0.3)  
-    corrected_payload = ''.join([
+    # Step 4: Recon-Aware Mutation
+    if recon_features.get("iframes", 0) > 0:
+        corrected_payload = f"<iframe srcdoc='{corrected_payload}'></iframe>"
+
+    if recon_features.get("forms_detected", 0) > 3:
+        corrected_payload = f"<form>{corrected_payload}</form>"
+
+    if recon_features.get("textareas", 0) > 2:
+        corrected_payload = corrected_payload.replace(">", ">\n<!--hidden field-->\n")
+
+    # Step 5: Bayesian Filtering
+    noise_factor = np.random.uniform(0.1, 0.25)
+    final_payload = ''.join([
         char if np.random.rand() > noise_factor else random.choice(string.ascii_letters + string.digits)
         for char in corrected_payload
     ])
 
-    logging.info(f"[*] Quantum Error Corrected Payload: {corrected_payload[:50]}...")
-    return corrected_payload
+    logging.info(f"[*] Final Recon-Aware Payload: {final_payload[:60]}...")
+    return final_payload
     
 def evade_waf(payload):
     """
