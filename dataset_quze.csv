@@ -1,5 +1,1 @@
-original_payload,response_code,response_size,response_contains,mutated_payload,waf_detected,success
-<script>alert(1)</script>,403,1300,blocked,<img src=x onerror=alert(1)>,1,0
-<img src=x onerror=alert(1)>,200,1920,success,<svg onload=alert(1)>,0,1
-' OR 1=1 --,403,1400,forbidden,"'/**/OR/**/1=1--",1,0
-<iframe src=javascript:alert(1)>,200,2100,loaded,<object data=javascript:alert(1)>,0,1
+target,dns_records,whois,server,tls_cert,robots_txt,sitemap,waf_fingerprint,headers,cookies,cookie_flags,content_length,status_code_home,allowed_methods,common_paths_status,access_control,forms_detected,input_fields,textareas,select_fields,external_scripts,js_links,iframes,meta_tags,inline_event_handlers,comments_in_html,anomaly_index,ai_analysis
