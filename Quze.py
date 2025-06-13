@@ -323,12 +323,24 @@ def analyze_payload_feedback(payload, target=None):
     """
     logging.info("[*] Quantum Feedback Analysis with AI Recon Context...")
 
+    # Ambil target dari argumen CLI jika tidak disuplai
+    if target is None:
+        try:
+            import sys
+            args = sys.argv
+            if "-t" in args:
+                target_index = args.index("-t") + 1
+                if target_index < len(args):
+                    target = args[target_index]
+        except Exception as e:
+            logging.warning(f"[!] Tidak bisa ambil target dari argumen: {e}")
+            target = None
+
     try:
         model = load_analysis_model()
         if not model:
             raise RuntimeError("Model analisis tidak tersedia.")
 
-        # Ambil konteks recon berdasarkan target
         recon_row = None
         if target:
             import pandas as pd
@@ -341,7 +353,7 @@ def analyze_payload_feedback(payload, target=None):
                 logging.warning(f"[!] Gagal load recon untuk {target}: {e}")
 
         if recon_row is not None:
-            # Ambil 10 fitur numerik utama sesuai input ke model analisis
+            # Ambil fitur sesuai input model analisis
             features = np.array([
                 recon_row["forms_detected"],
                 recon_row["js_links"],
@@ -375,6 +387,7 @@ def analyze_payload_feedback(payload, target=None):
 
         else:
             logging.warning("[!] Tidak ditemukan data recon, fallback ke random.")
+            label = "unknown"
             success_rate = random.uniform(0.5, 1.0)
             evasion_index = random.uniform(0.4, 0.95)
 
@@ -409,6 +422,7 @@ def analyze_payload_feedback(payload, target=None):
             'quantum_score': 0.5,
             'ai_label': "unknown"
         }
+        
 def postprocess_output(output_vector):
     """
     Mengonversi output dari neural network menjadi string yang valid menggunakan 
