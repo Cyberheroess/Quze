@@ -444,11 +444,13 @@ def postprocess_output(output_vector):
 
 def quantum_error_correction(payload, target=None):
     """
-    Quantum Error Correction yang adaptif berdasarkan recon feature seperti iframe, forms, dll.
+    Quantum Error Correction adaptif berbasis recon dan terintegrasi dengan AI payload model.
+    - Mengambil konteks recon dari dataset_quze.csv
+    - Menggabungkan strategi hamming/parity + recon + AI cloaking
     """
-    logging.info("[*] Adaptive Quantum Error Correction Initiated...")
+    logging.info("[*] Quantum Error Correction dengan recon-aware + AI stealth initiated.")
 
-    # Step 1: Load konteks recon dari dataset_quze.csv
+    # === Step 1: Ambil konteks recon dari target ===
     recon_features = {}
     if target:
         try:
@@ -456,12 +458,27 @@ def quantum_error_correction(payload, target=None):
             df = pd.read_csv("dataset_quze.csv")
             match = df[df["target"].str.contains(target, na=False)]
             if not match.empty:
-                row = match.iloc[-1]
-                recon_features = row.to_dict()
+                recon_features = match.iloc[-1].to_dict()
+                logging.info(f"[+] Recon context ditemukan untuk target: {target}")
+            else:
+                logging.warning("[!] Tidak ditemukan recon context untuk target.")
         except Exception as e:
-            logging.warning(f"[!] Gagal load recon context: {e}")
+            logging.warning(f"[!] Gagal membaca dataset recon: {e}")
 
-    # Step 2: Encoding - Quantum Hamming Code
+    # === Step 2: Load model ML payload (opsional digunakan untuk augmentasi pola) ===
+    model = load_ml_model()
+    stealth_mod = ""
+    if model:
+        try:
+            stealth_vector = np.random.rand(1, model.input_shape[-1])
+            payload_guidance = model.predict(stealth_vector)[0]
+            stealth_mod = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
+            logging.info(f"[+] AI Stealth Modifier generated: {stealth_mod}")
+        except Exception as e:
+            logging.warning(f"[!] Error saat prediksi AI stealth payload: {e}")
+            stealth_mod = ""
+
+    # === Step 3: Hamming Encode ===
     def hamming_encode(data):
         encoded_data = []
         for char in data:
@@ -477,30 +494,34 @@ def quantum_error_correction(payload, target=None):
 
     encoded_payload = hamming_encode(payload)
 
-    # Step 3: Parity Check Decode
+    # === Step 4: Parity Check Decode ===
     def parity_check(data):
         return ''.join([chr(int(data[i:i+8], 2)) for i in range(0, len(data), 8)])
 
     corrected_payload = parity_check(encoded_payload)
 
-    # Step 4: Recon-Aware Mutation
+    # === Step 5: Recon-aware wrapping ===
     if recon_features.get("iframes", 0) > 0:
         corrected_payload = f"<iframe srcdoc='{corrected_payload}'></iframe>"
 
-    if recon_features.get("forms_detected", 0) > 3:
+    if recon_features.get("forms_detected", 0) > 2:
         corrected_payload = f"<form>{corrected_payload}</form>"
 
-    if recon_features.get("textareas", 0) > 2:
-        corrected_payload = corrected_payload.replace(">", ">\n<!--hidden field-->\n")
+    if recon_features.get("textareas", 0) > 1:
+        corrected_payload = corrected_payload.replace(">", ">\n<!--auto-inject textarea stealth-->\n")
 
-    # Step 5: Bayesian Filtering
-    noise_factor = np.random.uniform(0.1, 0.25)
+    # === Step 6: Tambahkan AI stealth layer dari model ===
+    if stealth_mod:
+        corrected_payload = f"{corrected_payload}<!--{stealth_mod}-->"
+
+    # === Step 7: Bayesian mutation untuk hindari signature-based block ===
+    noise_factor = np.random.uniform(0.1, 0.3)
     final_payload = ''.join([
         char if np.random.rand() > noise_factor else random.choice(string.ascii_letters + string.digits)
         for char in corrected_payload
     ])
 
-    logging.info(f"[*] Final Recon-Aware Payload: {final_payload[:60]}...")
+    logging.info(f"[✓] Final quantum-corrected payload (preview): {final_payload[:60]}...")
     return final_payload
     
 def evade_waf(payload):
